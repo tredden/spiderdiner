@@ -49,17 +49,17 @@ public class FlyManager : MonoBehaviour
 
     void UpdateObstacles(float dt)
     {
-        foreach (ObstacleBase obstacle in obstacles) {
-            for (int i = 0; i < flies.Length; i++) {
-                // TODO: is this making a copy or not?...
-                Fly f = flies[i];
-                if (f.enabled) {
+        for (int i = 0; i < flies.Length; i++) {
+            // TODO: is this making a copy or not?...
+            Fly f = flies[i];
+            if (f.enabled) {
+                foreach (ObstacleBase obstacle in obstacles) {
                     if (obstacle.GetDoesInteract(ref f, dt)) {
                         obstacle.InfluenceFly(ref f, dt);
                     }
-                    flies[i] = f;
                 }
             }
+            flies[i] = f;
         }
     }
 
