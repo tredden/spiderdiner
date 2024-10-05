@@ -24,55 +24,20 @@ public class FlyManager : MonoBehaviour
 
     List<ObstacleBase> obstacles = new List<ObstacleBase>();
 
-    public void RegisterObstacle(ObstacleBase ob)
-    {
-        if (obstacles.Contains(ob)) {
-            return;
-        }
-        int index = 0;
-        int actOrder = ob.GetActOrder();
-        for (; index < obstacles.Count; index++) {
-            if (actOrder <= obstacles[index].GetActOrder()) {
-                break;
-            }
-        }
-        obstacles.Insert(index, ob);
-    }
-
-    public void DeregisterObstacle(ObstacleBase ob)
-    {
-        if (!obstacles.Contains(ob)) {
-            return;
-        }
-        obstacles.Remove(ob);
-    }
-
-    void UpdateObstacles(float dt)
-    {
-        for (int i = 0; i < flies.Length; i++) {
-            // TODO: is this making a copy or not?...
-            Fly f = flies[i];
-            if (f.enabled) {
-                foreach (ObstacleBase obstacle in obstacles) {
-                    if (obstacle.GetDoesInteract(ref f, dt)) {
-                        obstacle.InfluenceFly(ref f, dt);
-                    }
-                }
-            }
-            flies[i] = f;
-        }
-    }
-
+   
     // Active flies
     const int MAX_FLIES = 10000;
     Fly[] flies = new Fly[10000];
     int lastSpawnedFly = 0;
+    ParticleSystem flyRender;
 
+    [SerializeField]
     BoidsRules boidsRules;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        instance = this;
+        flyRender = this.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -81,25 +46,9 @@ public class FlyManager : MonoBehaviour
         float dt = Time.deltaTime;
         // Update flies based on boids rules
         UpdateBoids(dt);
-
-        for (int i = 0; i < flies.Length; i++) {
-            Fly fly = flies[i];
-            if (!fly.active) continue;
-            // Apply dvx, dvy
-            fly.vx += fly.dvx * dt;
-            fly.vy += fly.dvy * dt;
-
-			// Clamp fly velocity
-			float speed = Mathf.Sqrt(fly.vx * fly.vx + fly.vy * fly.vy);
-			if (speed > boidsRules.maxSpeed) {
-				fly.vx = fly.vx / speed * boidsRules.maxSpeed;
-				fly.vy = fly.vy / speed * boidsRules.maxSpeed;
-			}
-			if (speed < boidsRules.minSpeed) {
-				fly.vx = fly.vx / speed * boidsRules.minSpeed;
-				fly.vy = fly.vy / speed * boidsRules.minSpeed;
-			}
-        }
+        UpdateObstacles(dt);
+        UpdateFlyState(dt);
+        UpdateVisuals(dt);
     }
 
     void UpdateBoids(float dt)
@@ -107,7 +56,9 @@ public class FlyManager : MonoBehaviour
         // Update flies based on boids rules
         for (int i = 0; i < flies.Length; i++) {
 			Fly fly = flies[i];
-            if (!fly.active) continue;
+            if (!fly.enabled) {
+                continue;
+            }
 
             // Separation
             List<int> protectedNeighbors = getNeighborIndices(i, boidsRules.protectedRange);
@@ -161,7 +112,7 @@ public class FlyManager : MonoBehaviour
         // TODO: This is horribly inefficient.
         for (int i = 0; i < flies.Length; i++) {
             var otherFly = flies[i];
-            if (!otherFly.active || i == flyIndex) {
+            if (!otherFly.enabled || i == flyIndex) {
                 continue;
             }
             float dx = otherFly.x - fly.x;
@@ -173,10 +124,77 @@ public class FlyManager : MonoBehaviour
         return neighbors;
     }
 
+    public void RegisterObstacle(ObstacleBase ob)
+    {
+        if (obstacles.Contains(ob)) {
+            return;
+        }
+        int index = 0;
+        int actOrder = ob.GetActOrder();
+        for (; index < obstacles.Count; index++) {
+            if (actOrder <= obstacles[index].GetActOrder()) {
+                break;
+            }
+        }
+        obstacles.Insert(index, ob);
+    }
+
+    public void DeregisterObstacle(ObstacleBase ob)
+    {
+        if (!obstacles.Contains(ob)) {
+            return;
+        }
+        obstacles.Remove(ob);
+    }
+
+    void UpdateObstacles(float dt)
+    {
+        for (int i = 0; i < flies.Length; i++) {
+            // TODO: is this making a copy or not?...
+            Fly f = flies[i];
+            if (f.enabled) {
+                foreach (ObstacleBase obstacle in obstacles) {
+                    if (obstacle.GetDoesInteract(ref f, dt)) {
+                        obstacle.InfluenceFly(ref f, dt);
+                    }
+                }
+            }
+            flies[i] = f;
+        }
+    }
+
+    void UpdateFlyState(float dt)
+    {
+        for (int i = 0; i < flies.Length; i++) {
+            Fly fly = flies[i];
+            // check if the fly is disabled this frame
+            fly.enabled = fly.enabled && !fly.disable;
+            fly.disable = false;
+            if (!fly.enabled) {
+                continue;
+            }
+
+            // Apply dvx, dvy
+            fly.vx += fly.dvx * dt;
+            fly.vy += fly.dvy * dt;
+            
+            // Clamp fly velocity
+            float speed = Mathf.Sqrt(fly.vx * fly.vx + fly.vy * fly.vy);
+            if (speed > boidsRules.maxSpeed) {
+                fly.vx = fly.vx / speed * boidsRules.maxSpeed;
+                fly.vy = fly.vy / speed * boidsRules.maxSpeed;
+            }
+            if (speed < boidsRules.minSpeed) {
+                fly.vx = fly.vx / speed * boidsRules.minSpeed;
+                fly.vy = fly.vy / speed * boidsRules.minSpeed;
+            }
+        }
+    }
+
     public bool SpawnFly(Fly details)
     {
-		int start = lastSpawnedFly;
-        while(flies[lastSpawnedFly].active) {
+        int start = lastSpawnedFly;
+        while (flies[lastSpawnedFly].enabled) {
             lastSpawnedFly = (lastSpawnedFly + 1) % MAX_FLIES;
             if (lastSpawnedFly == start) {
                 Debug.LogError("No more space for flies!");
@@ -185,6 +203,44 @@ public class FlyManager : MonoBehaviour
         }
 
         flies[lastSpawnedFly] = details;
+        posVec.x = details.x;
+        posVec.y = details.y;
+        posVec.z = -details.y;
+        velVec.x = details.vx;
+        velVec.y = details.vy;
+        flyRender.Emit(posVec, velVec, 1f, 10f, Color.white);
         return true;
+    }
+    Vector3 posVec = Vector3.zero;
+    Vector3 velVec = Vector3.zero;
+    void UpdateVisuals(float dt)
+    {
+        posVec = Vector3.zero;
+        velVec = Vector3.zero;
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[flyRender.particleCount];
+        flyRender.GetParticles(particles);
+        int j = 0;
+        for(int i = 0; i < particles.Length; i++) {
+            for (; j < MAX_FLIES; j++) {
+                if (flies[j].enabled) {
+                    j++;
+                    break;
+                }
+            }
+            if (j < MAX_FLIES) {
+                Fly fly = flies[j];
+                posVec.x = fly.x;
+                posVec.y = fly.y;
+                posVec.z = -fly.y;
+                velVec.x = fly.vx;
+                velVec.y = fly.vy;
+                velVec.z = 0;
+                particles[i].position = posVec;
+                particles[i].velocity = velVec;
+                particles[i].remainingLifetime = 1f;
+            } else {
+                particles[i].remainingLifetime = 0f;
+            }
+        }
     }
 }
