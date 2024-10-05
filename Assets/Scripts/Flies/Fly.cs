@@ -5,38 +5,33 @@ using UnityEngine;
 public enum FlyColor { UNSET = 0, BLUE = 1, }
 
 public struct BoidsUpdate {
-    // Separation
-    public float close_dx;
-    public float close_dy;
+	// Separation is handled immediately by adding to dvx and dvy.
+    // The other rules need to know the number of neighbors, so
+    // they are applied to dvx and dvy at the end.
 
+    public int neighboring_boids;
     // Alignment
     public float xvel_avg;
     public float yvel_avg;
-    public int neighboring_boids;
+
 
     // Cohesion
     public float xpos_avg;
     public float ypos_avg;
 }
 
-public struct FlyData {
+[System.Serializable]
+public struct Fly {
     public float x;
     public float y;
     public float vx;
     public float vy;
+    public float dvx;
+    public float dvy;
     public FlyColor color;
     int spiceLevel;
-}
 
-[System.Serializable]
-public struct Fly {
-    // One of these is the current frame
-    // The other is the previous frame.
-	FlyData[] data = new FlyData[2];
+    // Temporary values for looping through and updating boids behavior.
+    // These get applied to dvx and dvy at the end of the boids update.
     BoidsUpdate boidsUpdate;
-
-	public Fly(ref FlyData data) {
-        this.data[0] = data;
-        this.data[1] = data;
-    }
 }    

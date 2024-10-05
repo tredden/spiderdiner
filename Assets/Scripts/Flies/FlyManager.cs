@@ -39,11 +39,7 @@ public class FlyManager : MonoBehaviour
 
     public void SpawnFly(Vector2 position, Vector2 velocity)
     {
-        Fly fly = new Fly(new FlyData {
-            pos = position,
-            vel = velocity,
-            color = Color.BLUE,
-            spiceLevel = 0
-        });
+		// TODO
+
     }
 }
