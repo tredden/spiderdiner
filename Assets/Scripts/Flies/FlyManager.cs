@@ -173,6 +173,7 @@ public class FlyManager : MonoBehaviour
             fly.enabled = fly.enabled && !fly.disable;
             fly.disable = false;
             if (!fly.enabled) {
+                flies[i] = fly;
                 continue;
             }
 
@@ -197,6 +198,7 @@ public class FlyManager : MonoBehaviour
 
             fly.x += fly.vx * dt;
             fly.y += fly.vy * dt;
+
             flies[i] = fly;
         }
     }
@@ -221,6 +223,7 @@ public class FlyManager : MonoBehaviour
         posVec.z = -details.y;
         velVec.x = details.vx;
         velVec.y = details.vy;
+        velVec.z = 0f;
         flyRender.Emit(posVec, velVec, 1f, 10f, Color.white);
         return true;
     }
@@ -256,5 +259,6 @@ public class FlyManager : MonoBehaviour
                 particles[i].startColor = Color.red;
             }
         }
+        flyRender.SetParticles(particles);
     }
 }
