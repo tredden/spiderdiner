@@ -61,8 +61,9 @@ public class FlyManager : MonoBehaviour
         UpdateVisuals(dt);
     }
 
-    List<int> protectedNeighbors = new List<int>();
-    List<int> neighbors = new List<int>();
+    List<int> neighbors = new List<int>(MAX_FLIES);
+    List<int> protectedNeighbors = new List<int>(MAX_FLIES);
+
     void UpdateBoids(float dt)
     {
         // Update flies based on boids rules
