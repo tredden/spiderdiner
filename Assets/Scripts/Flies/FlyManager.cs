@@ -178,6 +178,10 @@ public class FlyManager : MonoBehaviour
             // Apply dvx, dvy
             fly.vx += fly.dvx * dt;
             fly.vy += fly.dvy * dt;
+
+            // Reset dvx, dvy
+            fly.dvx = 0;
+            fly.dvy = 0;
             
             // Clamp fly velocity
             float speed = Mathf.Sqrt(fly.vx * fly.vx + fly.vy * fly.vy);
@@ -205,8 +209,10 @@ public class FlyManager : MonoBehaviour
                 return false;
             }
         }
+        details.enabled = true;
 
         flies[lastSpawnedFly] = details;
+        
         posVec.x = details.x;
         posVec.y = details.y;
         posVec.z = -details.y;
@@ -244,6 +250,7 @@ public class FlyManager : MonoBehaviour
                 particles[i].remainingLifetime = 1f;
             } else {
                 particles[i].remainingLifetime = 0f;
+                particles[i].startColor = Color.red;
             }
         }
     }
