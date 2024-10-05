@@ -223,6 +223,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 315307835484915629, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
+      propertyPath: UVModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315307835484915629, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
+      propertyPath: ShapeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315307835484915629, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2702035491415060508, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
       propertyPath: m_Name
       value: FlyManager
@@ -325,6 +337,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
+      propertyPath: fliesPerSecond
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
+      propertyPath: spawnRegionSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: initialVelocity.y
       value: -3
       objectReference: {fileID: 0}
@@ -385,6 +405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vinegar
       objectReference: {fileID: 0}
+    - target: {fileID: 2819148417596139124, guid: 93619ad6a55e59d41bc419987e373eb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -442,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table
       objectReference: {fileID: 0}
+    - target: {fileID: 8449990336020609959, guid: f3d95102032187d40a89947d8490473d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -455,13 +483,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 948334213273358648, guid: 9555f7acbc6cafe418ce865a4d29f771, type: 3}
+      propertyPath: attractionForce
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2434921118197259410, guid: 9555f7acbc6cafe418ce865a4d29f771, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2434921118197259410, guid: 9555f7acbc6cafe418ce865a4d29f771, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.47
+      value: -0.67
       objectReference: {fileID: 0}
     - target: {fileID: 2434921118197259410, guid: 9555f7acbc6cafe418ce865a4d29f771, type: 3}
       propertyPath: m_LocalPosition.z

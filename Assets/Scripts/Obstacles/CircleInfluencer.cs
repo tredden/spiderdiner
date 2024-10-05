@@ -12,6 +12,8 @@ public class CircleInfluencer : ObstacleBase
         float dx = fly.x - this.transform.position.x;
         float dy = fly.y - this.transform.position.y;
 
-        return Mathf.Sqrt(dx*dx + dy*dy) <= rawInfluenceRadius;
+        bool interact = Mathf.Sqrt(dx * dx + dy * dy) <= rawInfluenceRadius;
+        Debug.Log("Check interact (dx = " + dx + ", dy = " + dy + ", radius = " + rawInfluenceRadius + ", interact = " + interact + ")");
+        return interact;
     }
 }
