@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CircleInfluencer : ObstacleBase
 {
-    [SerializeField]
     protected float influenceRadius;
 
     public override bool GetDoesInteract(ref Fly fly, float dt)

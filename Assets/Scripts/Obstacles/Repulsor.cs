@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Repulsor : Attractor
 {
+    protected override float GetAttractionMult()
+    {
+        return -1f;
+    }
+
     public override void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

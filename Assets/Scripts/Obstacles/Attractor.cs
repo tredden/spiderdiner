@@ -4,50 +4,24 @@ using UnityEngine;
 
 public class Attractor : CircleInfluencer
 {
-    float _attractionRadius;
     [SerializeField]
-    protected float attractionRadius {
-        get {
-            return _attractionRadius;
-        }
-        set {
-            _attractionRadius = value;
-            attractionRadiusSquared = attractionRadius * attractionRadius;
-        }
-    }
+    protected float attractionRadius;
     float attractionRadiusSquared;
 
     [SerializeField]
-    float _attractionForce;
-    protected float attractionForce {
-        get {
-            return _attractionForce;
-        }
-        set {
-            _attractionForce = value;
-            realAttractionForce = attractionForce * GetAttractionMult();
-        }
-    }
+    float attractionForce;
     float realAttractionForce;
 
-    float _destructorRadius;
     [SerializeField]
-    protected float destructorRadius {
-        get {
-            return _destructorRadius;
-        }
-        set {
-            _destructorRadius = value;
-            destructorRadiusSquared = destructorRadius * destructorRadius;
-        }
-    }
+    protected float destructorRadius;
     float destructorRadiusSquared;
 
-    private void Start()
+    private void Update()
     {
         influenceRadius = Mathf.Max(attractionRadius, destructorRadius);
         attractionRadiusSquared = attractionRadius * attractionRadius;
         destructorRadiusSquared = destructorRadius * destructorRadius;
+        realAttractionForce = attractionForce * GetAttractionMult();
     }
 
     protected virtual float GetAttractionMult()
