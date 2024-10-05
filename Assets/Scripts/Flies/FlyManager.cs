@@ -66,6 +66,7 @@ public class FlyManager : MonoBehaviour
     // Active flies
     const int MAX_FLIES = 10000;
     Fly[] flies = new Fly[10000];
+    int lastSpawnedFly = 0;
 
     BoidsRules boidsRules;
 
@@ -172,9 +173,18 @@ public class FlyManager : MonoBehaviour
         return neighbors;
     }
 
-    public void SpawnFly(Fly details)
+    public bool SpawnFly(Fly details)
     {
-		// TODO
+		int start = lastSpawnedFly;
+        while(flies[lastSpawnedFly].active) {
+            lastSpawnedFly = (lastSpawnedFly + 1) % MAX_FLIES;
+            if (lastSpawnedFly == start) {
+                Debug.LogError("No more space for flies!");
+                return false;
+            }
+        }
 
+        flies[lastSpawnedFly] = details;
+        return true;
     }
 }
