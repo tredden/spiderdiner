@@ -103,6 +103,7 @@ public class FlyManager : MonoBehaviour
             }
             fly.dvx += (xpos_avg - fly.x) * boidsRules.centeringFactor;
             fly.dvy += (ypos_avg - fly.y) * boidsRules.centeringFactor;
+            flies[i] = fly;
         }
     }
 
@@ -196,6 +197,7 @@ public class FlyManager : MonoBehaviour
 
             fly.x += fly.vx * dt;
             fly.y += fly.vy * dt;
+            flies[i] = fly;
         }
     }
 
@@ -211,6 +213,7 @@ public class FlyManager : MonoBehaviour
         }
         details.enabled = true;
 
+        details.enabled = true;
         flies[lastSpawnedFly] = details;
         
         posVec.x = details.x;
