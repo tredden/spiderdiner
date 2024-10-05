@@ -33,14 +33,10 @@ public struct Fly {
     // One of these is the current frame
     // The other is the previous frame.
 	FlyData[] data = new FlyData[2];
-
-
+    BoidsUpdate boidsUpdate;
 
 	public Fly(ref FlyData data) {
         this.data[0] = data;
         this.data[1] = data;
     }
-
-
-
 }    

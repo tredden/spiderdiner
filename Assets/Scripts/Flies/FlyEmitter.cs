@@ -11,7 +11,7 @@ public class FlyEmitter : MonoBehaviour
     FlyManager flyManager;
 
     [SerializeField]
-    FlyDetails initialState;
+    Fly initialState;
 
     [SerializeField]
     float fliesPerSecond;
