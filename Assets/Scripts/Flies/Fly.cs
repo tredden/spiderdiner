@@ -29,7 +29,9 @@ public struct Fly {
     public float dvx;
     public float dvy;
     public FlyColor color;
-    int spiceLevel;
+    public int spiceLevel;
+    public bool enabled;
+    public bool disable;
 
     // Temporary values for looping through and updating boids behavior.
     // These get applied to dvx and dvy at the end of the boids update.
