@@ -40,6 +40,8 @@ public class FlyEmitter : MonoBehaviour
             float dist = Random.Range(0, spawnRegionSize);
             initialState.x = transform.position.x + dist * Mathf.Cos(theta);
             initialState.y = transform.position.y + dist * Mathf.Sin(theta);
+            initialState.vx = initialVelocity.x;
+            initialState.vy = initialVelocity.y;
 
             flyManager.SpawnFly(initialState);
             mQueue -= (1f / fliesPerSecond);

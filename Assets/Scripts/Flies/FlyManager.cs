@@ -14,6 +14,7 @@ struct BoidsRules {
     public float minSpeed;
 }
 
+[RequireComponent(typeof(ParticleSystem))]
 public class FlyManager : MonoBehaviour
 {
     static FlyManager instance;
@@ -21,9 +22,6 @@ public class FlyManager : MonoBehaviour
     {
         return instance;
     }
-
-    List<ObstacleBase> obstacles = new List<ObstacleBase>();
-
    
     // Active flies
     const int MAX_FLIES = 10000;
@@ -33,6 +31,9 @@ public class FlyManager : MonoBehaviour
 
     [SerializeField]
     BoidsRules boidsRules;
+
+    [SerializeField]
+    List<ObstacleBase> obstacles = new List<ObstacleBase>();
 
     void Awake()
     {
@@ -188,6 +189,9 @@ public class FlyManager : MonoBehaviour
                 fly.vx = fly.vx / speed * boidsRules.minSpeed;
                 fly.vy = fly.vy / speed * boidsRules.minSpeed;
             }
+
+            fly.x += fly.vx * dt;
+            fly.y += fly.vy * dt;
         }
     }
 
