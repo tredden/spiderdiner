@@ -16,7 +16,7 @@ public class FlyManager : MonoBehaviour
         
     }
 
-    public void SpawnFly(Vector2 position, Vector2 velocity, FlyDetails details)
+    public void SpawnFly(Fly details)
     {
         // TODO
     }

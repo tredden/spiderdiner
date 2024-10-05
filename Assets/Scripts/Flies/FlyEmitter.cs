@@ -11,7 +11,7 @@ public class FlyEmitter : MonoBehaviour
     FlyManager flyManager;
 
     [SerializeField]
-    FlyDetails initialState;
+    Fly initialState;
 
     [SerializeField]
     float fliesPerSecond;
@@ -31,8 +31,22 @@ public class FlyEmitter : MonoBehaviour
 
         while (mQueue >= 1f/fliesPerSecond) {
             // TODO: get spawn position from noise and do this without making new Vectors
-            flyManager.SpawnFly(new Vector2(transform.position.x, transform.position.z), initialVelocity, initialState);
+            float theta = Random.Range(0, Mathf.PI * 2f);
+            float dist = Random.Range(0, spawnRegionSize);
+            initialState.x = transform.position.x + dist * Mathf.Cos(theta);
+            initialState.y = transform.position.y + dist * Mathf.Sin(theta);
+
+            flyManager.SpawnFly(initialState);
             mQueue -= (1f / fliesPerSecond);
         }
+    }
+
+    public virtual void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, spawnRegionSize);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(initialVelocity.x, initialVelocity.y, 0f));
     }
 }
