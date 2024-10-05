@@ -52,7 +52,7 @@ public class Attractor : CircleInfluencer
 
             fly.dvx += dvx;
             fly.dvy += dvy;
-            Debug.Log("Attractor (dvx = " + fly.dvx +", "+dvx  + ", dvy = " + fly.dvy + "," +dvy + ")");
+            // Debug.Log("Attractor (dvx = " + fly.dvx +", "+dvx  + ", dvy = " + fly.dvy + "," +dvy + ")");
         }
     }
 

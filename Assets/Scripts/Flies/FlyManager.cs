@@ -25,8 +25,11 @@ public class FlyManager : MonoBehaviour
    
     // Active flies
     const int MAX_FLIES = 10000;
-    Fly[] flies = new Fly[10000];
+    Fly[] flies;
     int lastSpawnedFly = 0;
+    [SerializeField]
+    int flyCount = 0;
+
     ParticleSystem flyRender;
 
     [SerializeField]
@@ -39,19 +42,27 @@ public class FlyManager : MonoBehaviour
     {
         instance = this;
         flyRender = this.GetComponent<ParticleSystem>();
+        flies = new Fly[10000];
+        for (int i = 0; i < MAX_FLIES; i++) {
+            flies[i] = new Fly();
+            flies[i].enabled = false;
+        }
     }
 
     // Update is called once per frame
+    float dt;
     void Update()
     {
-        float dt = Time.deltaTime;
+        dt = Time.deltaTime;
         // Update flies based on boids rules
-        UpdateBoids(dt);
+        // UpdateBoids(dt);
         UpdateObstacles(dt);
         UpdateFlyState(dt);
         UpdateVisuals(dt);
     }
 
+    List<int> protectedNeighbors = new List<int>();
+    List<int> neighbors = new List<int>();
     void UpdateBoids(float dt)
     {
         // Update flies based on boids rules
@@ -62,7 +73,7 @@ public class FlyManager : MonoBehaviour
             }
 
             // Separation
-            List<int> protectedNeighbors = getNeighborIndices(i, boidsRules.protectedRange);
+            getNeighborIndices(protectedNeighbors, i, boidsRules.protectedRange);
             float close_dx = 0;
             float close_dy = 0;
             foreach (int neighborIndex in protectedNeighbors) {
@@ -74,7 +85,7 @@ public class FlyManager : MonoBehaviour
             fly.dvy += close_dy * boidsRules.avoidFactor;
 
             // Alignment
-            List<int> neighbors = getNeighborIndices(i, boidsRules.visualRange);
+            getNeighborIndices(neighbors, i, boidsRules.visualRange);
             float xvel_avg = 0;
             float yvel_avg = 0;
             foreach (int neighborIndex in neighbors) {
@@ -107,8 +118,8 @@ public class FlyManager : MonoBehaviour
         }
     }
 
-    List<int> getNeighborIndices(int flyIndex, float radiusSquared) {
-		List<int> neighbors = new List<int>();
+    void getNeighborIndices(List<int> neighbors, int flyIndex, float radiusSquared) {
+		neighbors.Clear();
 		var fly = flies[flyIndex];
 
         // TODO: This is horribly inefficient.
@@ -123,7 +134,6 @@ public class FlyManager : MonoBehaviour
 				neighbors.Add(i);
             }
         }
-        return neighbors;
     }
 
     public void RegisterObstacle(ObstacleBase ob)
@@ -170,13 +180,17 @@ public class FlyManager : MonoBehaviour
         for (int i = 0; i < flies.Length; i++) {
             Fly fly = flies[i];
             // check if the fly is disabled this frame
-            fly.enabled = fly.enabled && !fly.disable;
-            fly.disable = false;
             if (!fly.enabled) {
+                continue;
+            }
+            if (fly.disable) {
+                fly.enabled = false;
+                fly.disable = false;
+                flyCount--;
                 flies[i] = fly;
                 continue;
             }
-
+            
             // Apply dvx, dvy
             fly.vx += fly.dvx * dt;
             fly.vy += fly.dvy * dt;
@@ -225,18 +239,19 @@ public class FlyManager : MonoBehaviour
         velVec.y = details.vy;
         velVec.z = 0f;
         flyRender.Emit(posVec, velVec, 1f, 10f, Color.white);
+        flyCount++;
         return true;
     }
     Vector3 posVec = Vector3.zero;
     Vector3 velVec = Vector3.zero;
+    ParticleSystem.Particle[] particles = new ParticleSystem.Particle[10000];
     void UpdateVisuals(float dt)
     {
         posVec = Vector3.zero;
         velVec = Vector3.zero;
-        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[flyRender.particleCount];
-        flyRender.GetParticles(particles);
+        flyRender.GetParticles(particles, flyRender.particleCount);
         int j = 0;
-        for(int i = 0; i < particles.Length; i++) {
+        for(int i = 0; i < flyCount; i++) {
             for (; j < MAX_FLIES; j++) {
                 if (flies[j].enabled) {
                     j++;
@@ -259,6 +274,6 @@ public class FlyManager : MonoBehaviour
                 particles[i].startColor = Color.red;
             }
         }
-        flyRender.SetParticles(particles);
+        flyRender.SetParticles(particles, flyCount);
     }
 }
