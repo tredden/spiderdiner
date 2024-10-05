@@ -7,7 +7,22 @@ public class ObstacleBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            
+        OnPlace();
+    }
+
+    private void OnDestroy()
+    {
+        OnRemove();
+    }
+
+    void OnPlace()
+    {
+        FlyManager.GetInstance().RegisterObstacle(this);
+    }
+
+    void OnRemove()
+    {
+        FlyManager.GetInstance().DeregisterObstacle(this);
     }
 
     public virtual int GetActOrder()

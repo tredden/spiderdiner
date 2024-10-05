@@ -18,7 +18,7 @@ public class Attractor : CircleInfluencer
 
     private void Update()
     {
-        influenceRadius = Mathf.Max(attractionRadius, destructorRadius);
+        rawInfluenceRadius = Mathf.Max(attractionRadius, destructorRadius);
         attractionRadiusSquared = attractionRadius * attractionRadius;
         destructorRadiusSquared = destructorRadius * destructorRadius;
         realAttractionForce = attractionForce * GetAttractionMult();
@@ -45,7 +45,7 @@ public class Attractor : CircleInfluencer
         if (rSquared <= destructorRadiusSquared) {
             fly.disable = true;
         } else if (rSquared <= attractionRadiusSquared) {
-            accMag = (realAttractionForce / rSquared) * dt;
+            accMag = (realAttractionForce / rSquared);
 
             dvx = -dx * accMag;
             dvy = -dy * accMag;

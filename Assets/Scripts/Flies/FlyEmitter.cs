@@ -21,6 +21,11 @@ public class FlyEmitter : MonoBehaviour
 
     float mQueue = 0f;
 
+    private void Start()
+    {
+        flyManager = FlyManager.GetInstance();
+    }
+
     // TODO: should this be fixed update for reliability?
     // Update is called once per frame
     void Update()
