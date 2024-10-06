@@ -808,8 +808,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 214554646197236561, guid: 246bbe7db94bfde46ae9abb5434dde42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1805729619}
   m_SourcePrefab: {fileID: 100100000, guid: 246bbe7db94bfde46ae9abb5434dde42, type: 3}
+--- !u!1 &1805729618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 214554646197236561, guid: 246bbe7db94bfde46ae9abb5434dde42, type: 3}
+  m_PrefabInstance: {fileID: 1805729617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1805729619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805729618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c783816870831b419322e60060fa316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
+  currentPos: {x: 0, y: 0, z: 0}
+  moveVec: {x: 0, y: 0, z: 0}
+  animator: {fileID: 1805729620}
+  moveSpeed: 30
+  stopThreshold: 0.1
+--- !u!95 &1805729620 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5877902044173530548, guid: 246bbe7db94bfde46ae9abb5434dde42, type: 3}
+  m_PrefabInstance: {fileID: 1805729617}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2033718514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1114,6 +1145,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1939203821772293637, guid: db7011ea1a9402e4bbc66183ca9b9f2e, type: 3}
+      propertyPath: spiderD
+      value: 
+      objectReference: {fileID: 1805729619}
     - target: {fileID: 1939203821772293637, guid: db7011ea1a9402e4bbc66183ca9b9f2e, type: 3}
       propertyPath: distTreshold
       value: 1

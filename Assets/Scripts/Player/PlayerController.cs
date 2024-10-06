@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     Camera viewCamera;
 
     [SerializeField]
+    SpiderD spiderD;
+
+    [SerializeField]
     BounceWeb bounceWebPrefab;
 
     BounceWeb activePlacementWeb = null;
@@ -33,6 +36,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float dt = Time.deltaTime;
+        mousePos = Input.mousePosition;
+        worldPos = viewCamera.ScreenToWorldPoint(mousePos);
+        // UpdateSpiderD(dt);
+
         switch (this.inputMode) {
             case InputMode.UNSET:
                 UpdateUnset(dt);
@@ -51,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 mousePos;
     Vector3 worldPos;
-
+    
     void UpdateUnset(float dt)
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -63,8 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) {
             activePlacementWeb = GameObject.Instantiate<BounceWeb>(bounceWebPrefab);
-            mousePos = Input.mousePosition;
-            worldPos = viewCamera.ScreenToWorldPoint(mousePos);
+            spiderD.SetTargetPos(worldPos);
             activePlacementWeb.SetPointA(worldPos.x, worldPos.y);
             activePlacementWeb.SetPointB(worldPos.x, worldPos.y);
             SetInputMode(InputMode.FINISH_DRAW_WEB);
@@ -73,9 +79,8 @@ public class PlayerController : MonoBehaviour
 
     void UpdateEndDrawWeb(float dt)
     {
-        mousePos = Input.mousePosition;
-        worldPos = viewCamera.ScreenToWorldPoint(mousePos);
         activePlacementWeb.SetPointB(worldPos.x, worldPos.y);
+        spiderD.SetTargetPos(worldPos);
 
         if (activePlacementWeb.GetDist() >= distTreshold && Input.GetMouseButtonUp(0)) {
             SetInputMode(InputMode.START_DRAW_WEB);
