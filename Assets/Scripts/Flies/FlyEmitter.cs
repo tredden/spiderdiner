@@ -21,6 +21,8 @@ public class FlyEmitter : MonoBehaviour
 
     float mQueue = 0f;
 
+    // bool hasEmitted = false;
+
     private void Start()
     {
         flyManager = FlyManager.GetInstance();
@@ -34,7 +36,8 @@ public class FlyEmitter : MonoBehaviour
 
         mQueue += dt;
 
-        while (mQueue >= 1f/fliesPerSecond) {
+        while (mQueue >= 1f/fliesPerSecond /*&& !hasEmitted*/) {
+            // hasEmitted = true;
             // TODO: get spawn position from noise and do this without making new Vectors
             float theta = Random.Range(0, Mathf.PI * 2f);
             float dist = Random.Range(0, spawnRegionSize);
@@ -48,7 +51,7 @@ public class FlyEmitter : MonoBehaviour
         }
     }
 
-    public virtual void OnDrawGizmosSelected()
+    public virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, spawnRegionSize);

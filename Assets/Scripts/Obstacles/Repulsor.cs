@@ -9,7 +9,7 @@ public class Repulsor : Attractor
         return -1f;
     }
 
-    public override void OnDrawGizmosSelected()
+    public override void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attractionRadius);

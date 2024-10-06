@@ -268,7 +268,6 @@ public class FlyManager : MonoBehaviour
                 velVec.z = 0;
                 particles[i].position = posVec;
                 particles[i].velocity = velVec;
-                // particles[i].remainingLifetime = 1f;
                 j++;
             } else {
                 particles[i].remainingLifetime = 0f;
