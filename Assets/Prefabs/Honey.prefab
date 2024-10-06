@@ -214,7 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6d31081b6e1bd4da337b50395e7cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navPrefab: {fileID: 2710073231257591594, guid: 4d32af63e0e2abe4ca45b90eaae51745, type: 3}
   rawInfluenceRadius: 0
+  carvesNavigation: 1
   attractionRadius: 5
   attractionForce: 5
   destructorRadius: 1.2

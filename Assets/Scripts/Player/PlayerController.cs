@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
             activePlacementWeb.SetPointB(worldPos.x, worldPos.y);
             SetInputMode(InputMode.FINISH_DRAW_WEB);
         }
+        if (Input.GetMouseButton(1)) {
+            spiderD.SetTargetPos(worldPos);
+        }
     }
 
     void UpdateEndDrawWeb(float dt)
