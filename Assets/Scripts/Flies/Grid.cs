@@ -10,6 +10,7 @@ class Grid {
 	int height;
 	int cellSize;
 
+	/** width and height are the dimensions of the grid in cells. */
 	public Grid(int widthRadius, int heightRadius, int cellSize) {
 		this.width = widthRadius * 2;
 		this.height = heightRadius * 2;
@@ -32,6 +33,10 @@ class Grid {
 	public void insert(float x, float y, int index) {
 		int gridX = getGridX(x);
 		int gridY = getGridY(y);
+		// Bounds check
+		if (gridX < 0 || gridX >= width || gridY < 0 || gridY >= height) {
+			return;
+		}
 		grid[gridX][gridY][gridCounts[gridX][gridY]++] = index;
 	}
 
