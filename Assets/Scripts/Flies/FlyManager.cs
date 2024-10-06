@@ -255,7 +255,6 @@ public class FlyManager : MonoBehaviour
         for(int i = 0; i < flyCount; i++) {
             for (; j < MAX_FLIES; j++) {
                 if (flies[j].enabled) {
-                    j++;
                     break;
                 }
             }
@@ -269,7 +268,8 @@ public class FlyManager : MonoBehaviour
                 velVec.z = 0;
                 particles[i].position = posVec;
                 particles[i].velocity = velVec;
-                particles[i].remainingLifetime = 1f;
+                // particles[i].remainingLifetime = 1f;
+                j++;
             } else {
                 particles[i].remainingLifetime = 0f;
                 particles[i].startColor = Color.red;

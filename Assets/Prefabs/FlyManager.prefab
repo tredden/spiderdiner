@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8bd19815c99ea49b3677a62416e6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flyCount: 0
   boidsRules:
     turnFactor: 0.2
     visualRange: 20
@@ -141,7 +142,7 @@ ParticleSystem:
   lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
-  cullingMode: 3
+  cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 2

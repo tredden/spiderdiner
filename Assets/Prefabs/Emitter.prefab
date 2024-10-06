@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89dbf845c64f304f89427580820ebd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: {x: 0, y: -1}
+  initialVelocity: {x: 0, y: -3}
   flyManager: {fileID: 0}
   initialState:
     x: 0
