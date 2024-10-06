@@ -931,19 +931,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
       propertyPath: pointA.x
-      value: -20
+      value: -21
       objectReference: {fileID: 0}
     - target: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
       propertyPath: pointA.y
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
       propertyPath: pointB.x
-      value: -15
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
       propertyPath: pointB.y
-      value: -1.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
       propertyPath: lineRender
@@ -1134,7 +1134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408467649512878360, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.15
+      value: 13.94
       objectReference: {fileID: 0}
     - target: {fileID: 3408467649512878360, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1167,22 +1167,6 @@ PrefabInstance:
     - target: {fileID: 3408467649512878360, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
-      propertyPath: fliesPerSecond
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
-      propertyPath: spawnRegionSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
-      propertyPath: initialVelocity.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
-      propertyPath: initialVelocity.y
-      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8273985483794533958, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_IsActive

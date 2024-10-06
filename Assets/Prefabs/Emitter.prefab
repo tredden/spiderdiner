@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 485846202026115388}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89dbf845c64f304f89427580820ebd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: {x: 0, y: -3}
+  initialVelocity: {x: 0, y: -10}
   flyManager: {fileID: 0}
   initialState:
     x: 0
@@ -142,5 +142,5 @@ MonoBehaviour:
     spiceLevel: 0
     enabled: 0
     disable: 0
-  fliesPerSecond: 10
-  spawnRegionSize: 1
+  fliesPerSecond: 30
+  spawnRegionSize: 1.6
