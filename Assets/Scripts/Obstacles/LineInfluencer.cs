@@ -54,20 +54,19 @@ public class LineInfluencer : ObstacleBase
         UpdateNavObstacle();
     }
 
-    protected override NavMeshObstacle GetNavObstacle()
+    protected override UnityEngine.AI.NavMeshObstacle GetNavObstacle()
     {
         if (navObstacle != null) {
             return navObstacle;
         }
         if (navObstacle == null && carvesNavigation) {
-            navObstacle = GameObject.Instantiate<NavMeshObstacle>(navPrefab);
+            navObstacle = GameObject.Instantiate<UnityEngine.AI.NavMeshObstacle>(navPrefab);
             UpdateNavObstacle();
             return navObstacle;
         }
         return null;
     }
 
-    [ExecuteInEditMode]
     protected virtual void UpdateNavObstacle()
     {
         if (navObstacle != null) {
@@ -78,7 +77,7 @@ public class LineInfluencer : ObstacleBase
             navObstacle.transform.position = pos;
             float dx = pointB.x - pointA.x;
             float dy = pointB.y - pointA.y;
-            navObstacle.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dy, dx) * Mathf.Rad2Deg);
+            navObstacle.transform.rotation = Quaternion.Euler(0f, Mathf.Atan2(dy, dx) * Mathf.Rad2Deg, 0f);
             Vector3 scale = navObstacle.transform.localScale;
             scale.x = Mathf.Sqrt(dx * dx + dy * dy);
             scale.z = width;
@@ -206,7 +205,6 @@ public class LineInfluencer : ObstacleBase
     Vector3 pos;
     Vector2 size;
 
-    [ExecuteInEditMode]
     private void UpdateVisual()
     {
         pos.x = (pointA.x + pointB.x) / 2f;
@@ -240,7 +238,6 @@ public class LineInfluencer : ObstacleBase
         lineRender.size = size;
     }
 
-    [ExecuteInEditMode]
     private void Update()
     {
         UpdateVisual();
