@@ -30,13 +30,13 @@ public class BounceWeb : LineInfluencer
         // GetIntersectPoint(ref x, ref y, fx0, fy0, fx1, fy1, pxa, pya, pxb, pyb);
 
         if (pdx == 0) {
-            fly.vy *= -1f;
-            fly.dvy *= -1f;
-            fly.y += fly.vy * width / 2f;
-        } else if (pdy == 0) {
             fly.vx *= -1f;
             fly.dvx *= -1f;
             fly.x += fly.vx * width / 2f;
+        } else if (pdy == 0) {
+            fly.vy *= -1f;
+            fly.dvy *= -1f;
+            fly.y += fly.vy * width / 2f;
         } else {
             dp.x = pdx;
             dp.y = pdy;

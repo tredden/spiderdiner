@@ -37,6 +37,10 @@ public class LineInfluencer : ObstacleBase
             // Debug.Log("both vertical");
             x = fx0;
             y = Mathf.Clamp(fy0, Mathf.Min(pya, pyb), Mathf.Max(pya, pyb));
+        } else if (Mathf.Abs(fdy) <= 0.0001f && Mathf.Abs(pdy) <= 0.0001f) {
+            // Debug.Log("both horizontal");
+            y = fy0;
+            x = Mathf.Clamp(fx0, Mathf.Min(pxa, pxb), Mathf.Max(pxa, pxb));
         } else if (Mathf.Abs(fdx) <= 0.0001f) {
             // Debug.Log("f vertical");
             x = fx0;
@@ -47,7 +51,17 @@ public class LineInfluencer : ObstacleBase
             x = fx0;
             float q = (fdy / fdx);
             y = q * (x - fx0) + fy0;
-        } else {
+        } else if (Mathf.Abs(fdy) < 0.0001f) {
+            // Debug.Log("f horizontal");
+            y = fy0;
+            float wi = (pdx / pdy);
+            x = wi * (y - pya) + pxa;
+        } else if (Mathf.Abs(pdy) < 0.0001f) {
+            // Debug.Log("p horizontal");
+            y = fy0;
+            float qi = (fdx / fdy);
+            x = qi * (y - fy0) + fx0;
+        } else { 
             // Debug.Log("no vertical: fdx = " + fdx + ", pdx = " + pdx);
             float q = (fdy / fdx);
             float w = (pdy / pdx);
