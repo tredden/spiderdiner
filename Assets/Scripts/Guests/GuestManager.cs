@@ -157,7 +157,9 @@ public class GuestManager : MonoBehaviour
 
     void UpdateHostStand(float dt)
     {
-        timeUntilNextGuest -= dt;
+        if (FindOpenTable() != null) {
+            timeUntilNextGuest -= dt;
+        }
 
         if (timeUntilNextGuest < 0f && waitingGuests.Count > 0) {
             Guest g = waitingGuests[0];
