@@ -27,6 +27,25 @@ public class LineInfluencer : ObstacleBase
     float pdx;
     float pdy;
 
+    public void SetPointA(float x, float y)
+    {
+        pointA.x = x;
+        pointA.y = y;
+        UpdateVisual();
+    }
+
+    public void SetPointB(float x, float y)
+    {
+        pointB.x = x;
+        pointB.y = y;
+        UpdateVisual();
+    }
+
+    public float GetDist()
+    {
+        return Vector2.Distance(pointA, pointB);
+    }
+
     protected void GetIntersectPoint(ref float x, ref float y, float fx0, float fy0, float fx1, float fy1, float pxa, float pya, float pxb, float pyb)
     {
         fdx = fx1 - fx0;
@@ -141,7 +160,8 @@ public class LineInfluencer : ObstacleBase
 
     Vector3 pos;
     Vector2 size;
-    private void Update()
+
+    private void UpdateVisual()
     {
         if (lineRender != null) {
             pos.x = (pointA.x + pointB.x) / 2f;
@@ -155,5 +175,10 @@ public class LineInfluencer : ObstacleBase
             size.y = lineRender.size.y;
             lineRender.size = size;
         }
+    }
+
+    private void Update()
+    {
+        UpdateVisual();
     }
 }
