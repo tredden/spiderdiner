@@ -7,7 +7,7 @@ public enum GuestStatus { UNSET = 0, WAITING_FOR_TABLE, PONDERING_ORDER, WAITING
 public class Guest : MonoBehaviour
 {
     [SerializeField]
-    GuestOrder activeOrder;
+    public GuestOrder activeOrder;
 
     [SerializeField]
     TMPro.TMP_Text statusText;
@@ -19,33 +19,40 @@ public class Guest : MonoBehaviour
     [SerializeField]
     float eatingTimeLeft = 3;
 
-    public void OnSeated(Dish d)
+    public bool ReceiveFly(Fly fly)
     {
-        UpdateOrderStatus(d);
-    }
-    
-    public void UpdateOrderStatus(Dish d)
-    {
-        UpdateDishString(activeOrder, d);
-        CheckForSatisfied(activeOrder, d);
+        bool received = activeOrder.ReceiveFly(fly);
+        
+        
+        // Possibly animate eating...
+        return received;
     }
 
-    void UpdateDishString(GuestOrder order, Dish d)
+    void UpdateOrderString()
     {
-        int firstText = d.flyAmount;
-        int secondText = order.flyAmount;
-        if (firstText > secondText) {
-            firstText = secondText;
-            statusText.fontStyle = TMPro.FontStyles.Bold & TMPro.FontStyles.Strikethrough;
-        } else {
-            statusText.fontStyle = TMPro.FontStyles.Bold;
+
+        statusText.text = "";
+        foreach (Dish dish in activeOrder.dishes)
+        {
+            int firstText = dish.fliesEaten;
+            int secondText = dish.fliesInDish;
+            if (firstText > secondText)
+            {
+                firstText = secondText;
+                statusText.fontStyle = TMPro.FontStyles.Bold & TMPro.FontStyles.Strikethrough;
+            }
+            else
+            {
+                statusText.fontStyle = TMPro.FontStyles.Bold;
+            }
+            statusText.text += firstText + " / " + secondText + "\n";
         }
-        statusText.text = firstText + " / " + secondText;
+
     }
 
-    void CheckForSatisfied(GuestOrder order, Dish d)
+    void CheckForSatisfied(GuestOrder order)
     {
-        if (d.flyAmount >= order.flyAmount && status == GuestStatus.WAITING_FOR_ORDER) {
+        if (!order.CheckDone() && status == GuestStatus.WAITING_FOR_ORDER) {
             SetStatus(GuestStatus.EATING);
             // do more stuff
         } else if (status != GuestStatus.WAITING_FOR_ORDER) {

@@ -5,22 +5,23 @@ using UnityEngine;
 [System.Serializable]
 public struct GuestOrder
 {
-	List<Dish> dishes;
+	public List<Dish> dishes;
+    public List<Dish> eatenDishes;
     // If true, the guest will require dishes to be served in order.
-    bool multiCourse;
+    public bool multiCourse;
 
     public bool CheckDone() {
         return dishes.Count == 0;
     }
 
-    public int flyAmount {
+    public int fliesEaten {
 		get {
 			if (dishes == null) {
 				return 0;
 			}
 			int total = 0;
 			for (int i = 0; i < dishes.Count; i++) {
-				total += dishes[i].flyAmount;
+				total += dishes[i].fliesEaten;
 			}
 			return total;
 		}
@@ -33,34 +34,52 @@ public struct GuestOrder
                 return false;
             }
             if (dishes[i].ReceiveFly(fly) && dishes[i].CheckDone()) {
+                eatenDishes.Add(dishes[i]);
                 dishes.RemoveAt(i);
                 return true;
             }
         }
         return false;
     }
+
+    override public string ToString()
+    {
+        string s = "";
+        foreach (Dish dish in dishes)
+        {
+            s += dish.ToString() + "\n";
+        }
+
+        return s.Substring(0, s.Length - 1);
+    }
 }
 
 [System.Serializable]
 public struct Dish
 {
-    public int flyAmount;
+    public int fliesInDish;
+    [HideInInspector]
+    public int fliesEaten;
     public int spiceLevel;
     public FlyColor color;
 
     public bool CheckDone() {
-        return flyAmount == 0;
+        return fliesEaten == fliesInDish;
     }
 
     public bool ReceiveFly(Fly fly) {
         if (fly.color == color && fly.spiceLevel == spiceLevel) {
-            flyAmount--;
+            fliesEaten++;
             return true;
         }
         return false;
     }
 
     public void Clear() {}
+
+    override public string ToString() {
+        return fliesEaten + " / " + fliesInDish;
+    }
 }
 
 public class GuestManager : MonoBehaviour
@@ -136,6 +155,7 @@ public class GuestManager : MonoBehaviour
         g.gameObject.SetActive(true);
         g.SetStatus(GuestStatus.WAITING_FOR_ORDER);
         t.ClearTable();
+        t.RemoveGuest();
         t.SetGuest(g);
         return true;
     }
