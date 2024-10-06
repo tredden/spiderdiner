@@ -256,6 +256,7 @@ public class FlyManager : MonoBehaviour
     Vector3 posVec = Vector3.zero;
     Vector3 velVec = Vector3.zero;
     ParticleSystem.Particle[] particles = new ParticleSystem.Particle[10000];
+    const float maxSpiceLevel = 3f;
     void UpdateVisuals(float dt)
     {
         posVec = Vector3.zero;
@@ -278,10 +279,10 @@ public class FlyManager : MonoBehaviour
                 velVec.z = 0;
                 particles[i].position = posVec;
                 particles[i].velocity = velVec;
+                particles[i].startColor = (Color.red * (float)fly.spiceLevel + Color.white * (maxSpiceLevel - (float)fly.spiceLevel)) / maxSpiceLevel;
                 j++;
             } else {
                 particles[i].remainingLifetime = 0f;
-                particles[i].startColor = Color.red;
             }
         }
         flyRender.SetParticles(particles, flyCount);

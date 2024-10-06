@@ -7,13 +7,22 @@ public class CircleInfluencer : ObstacleBase
     [SerializeField]
     protected float rawInfluenceRadius;
 
+    protected bool PointIsInCircle(float x, float y)
+    {
+        float dx = x - this.transform.position.x;
+        float dy = y - this.transform.position.y;
+        bool interact = Mathf.Sqrt(dx * dx + dy * dy) <= rawInfluenceRadius;
+        return interact;
+    }
+
     public override bool GetDoesInteract(ref Fly fly, float dt)
     {
-        float dx = fly.x - this.transform.position.x;
-        float dy = fly.y - this.transform.position.y;
+        return PointIsInCircle(fly.x, fly.y);
+    }
 
-        bool interact = Mathf.Sqrt(dx * dx + dy * dy) <= rawInfluenceRadius;
-        // Debug.Log("Check interact (dx = " + dx + ", dy = " + dy + ", radius = " + rawInfluenceRadius + ", interact = " + interact + ")");
-        return interact;
+    public virtual void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, rawInfluenceRadius);
     }
 }
