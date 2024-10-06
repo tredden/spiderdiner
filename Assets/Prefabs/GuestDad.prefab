@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6510491958499217143}
   - component: {fileID: 2733109856011471562}
-  - component: {fileID: 7398749188413660347}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -85,21 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7398749188413660347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4410543079604883366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d659ecd816c9104bbfef6592e1ec58b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeOrder:
-    flyAmount: 200
-  status: {fileID: 6232522791075533223}
 --- !u!1 &7721258775970399040
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7876931652374534969}
+  - component: {fileID: 97345713410305341}
   m_Layer: 0
   m_Name: GuestDad
   m_TagString: Untagged
@@ -133,6 +118,21 @@ Transform:
   - {fileID: 6510491958499217143}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &97345713410305341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721258775970399040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d659ecd816c9104bbfef6592e1ec58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeOrder:
+    flyAmount: 200
+  statusText: {fileID: 6232522791075533223}
 --- !u!1001 &1088686259517696465
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,9 +13,19 @@ public class Table : CircleInfluencer
     [SerializeField]
     Dish dish = new Dish();
 
+    private void Start()
+    {
+        base.Start();
+        GuestManager.GetInstance().RegisterTable(this);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        GuestManager.GetInstance().DeregisterTable(this);
+    }
+
     void AddFlyToCount()
     {
-        // TODO: update guest
         particles.Emit(1);
         dish.flyAmount++;
         if (activeGuest != null) {
@@ -23,7 +33,30 @@ public class Table : CircleInfluencer
         }
     }
 
-    void ClearTable()
+    public void SetGuest(Guest activeGuest)
+    {
+        this.activeGuest = activeGuest;
+        activeGuest.transform.position = this.transform.position;
+        activeGuest.transform.parent = this.transform;
+        activeGuest.UpdateOrderStatus(dish);
+    }
+
+    public void RemoveGuest()
+    {
+        this.activeGuest = null;
+    }
+
+    public Guest GetGuest()
+    {
+        return activeGuest;
+    }
+
+    public bool IsOccupied()
+    {
+        return activeGuest != null;
+    }
+
+    public void ClearTable()
     {
         particles.Clear();
         dish.Clear();

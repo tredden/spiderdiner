@@ -5,12 +5,12 @@ using UnityEngine;
 public class ObstacleBase : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         OnPlace();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         OnRemove();
     }
