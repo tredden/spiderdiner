@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LineInfluencer : ObstacleBase
 {
@@ -13,6 +14,12 @@ public class LineInfluencer : ObstacleBase
 
     [SerializeField]
     SpriteRenderer lineRender;
+
+    [SerializeField]
+    NavMeshObstacle navPrefab;
+    [SerializeField]
+    protected bool carvesNavigation = false;
+    NavMeshObstacle navObstacle;
 
     protected float x;
     protected float y;
@@ -32,6 +39,7 @@ public class LineInfluencer : ObstacleBase
         pointA.x = x;
         pointA.y = y;
         UpdateVisual();
+        UpdateNavObstacle();
     }
 
     public void SetPointB(float x, float y)
@@ -39,6 +47,38 @@ public class LineInfluencer : ObstacleBase
         pointB.x = x;
         pointB.y = y;
         UpdateVisual();
+        UpdateNavObstacle();
+    }
+
+    protected override UnityEngine.AI.NavMeshObstacle GetNavObstacle()
+    {
+        if (navObstacle != null) {
+            return navObstacle;
+        }
+        if (navObstacle == null && carvesNavigation) {
+            navObstacle = GameObject.Instantiate<UnityEngine.AI.NavMeshObstacle>(navPrefab);
+            UpdateNavObstacle();
+            return navObstacle;
+        }
+        return null;
+    }
+
+    protected virtual void UpdateNavObstacle()
+    {
+        if (navObstacle != null) {
+            Vector3 pos = navObstacle.transform.position;
+            pos.x = lineRender.transform.position.x;
+            pos.y = lineRender.transform.position.y;
+            navObstacle.transform.position = pos;
+            Vector3 euler = lineRender.transform.eulerAngles;
+            euler.y = euler.z;
+            euler.z = 0f;
+            navObstacle.transform.localEulerAngles = euler;
+            Vector3 scale = navObstacle.transform.localScale;
+            scale.x = GetDist();
+            scale.z = width;
+            navObstacle.transform.localScale = scale;
+        }
     }
 
     public float GetDist()
@@ -180,5 +220,6 @@ public class LineInfluencer : ObstacleBase
     private void Update()
     {
         UpdateVisual();
+        UpdateNavObstacle();
     }
 }

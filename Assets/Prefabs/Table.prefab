@@ -4929,5 +4929,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fca073e48a4aa143b7e20f4cc3b23b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navPrefab: {fileID: 2710073231257591594, guid: 4d32af63e0e2abe4ca45b90eaae51745, type: 3}
   rawInfluenceRadius: 3
+  carvesNavigation: 1
   particles: {fileID: 8633270426441626078}
+  activeGuest: {fileID: 0}
+  dish:
+    flyAmount: 0
+    spiceLevel: 0
+    color: 0

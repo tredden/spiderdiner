@@ -1,9 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ObstacleBase : MonoBehaviour
 {
+    protected virtual NavMeshObstacle GetNavObstacle()
+    {
+        return null;
+    }
+
+    protected virtual void ClearNavObstacle()
+    {
+        // NOP
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -18,11 +29,20 @@ public class ObstacleBase : MonoBehaviour
     void OnPlace()
     {
         FlyManager.GetInstance().RegisterObstacle(this);
+        NavMeshObstacle obs = GetNavObstacle();
+        if (obs != null) {
+            NavManager.GetInstance().RegisterObstacle(this, obs);
+        }
     }
 
     void OnRemove()
     {
         FlyManager.GetInstance().DeregisterObstacle(this);
+        NavMeshObstacle obs = GetNavObstacle();
+        if (obs != null) {
+            NavManager.GetInstance().DeregisterObstacle(this);
+            ClearNavObstacle();
+        }
     }
 
     public virtual int GetActOrder()
