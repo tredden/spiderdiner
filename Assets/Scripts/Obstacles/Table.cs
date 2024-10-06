@@ -10,7 +10,7 @@ public class Table : CircleInfluencer
         fly.disable = true;
     }
 
-    public void OnDrawGizmosSelected()
+    public void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, rawInfluenceRadius);
