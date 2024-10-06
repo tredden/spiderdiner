@@ -48,7 +48,7 @@ MonoBehaviour:
   pointA: {x: -5, y: 0}
   pointB: {x: 5, y: 0}
   width: 0.5
-  lineRender: {fileID: 0}
+  lineRender: {fileID: 9084679272335698271}
 --- !u!1 &2010140708917647710
 GameObject:
   m_ObjectHideFlags: 0
