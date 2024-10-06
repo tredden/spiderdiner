@@ -16,6 +16,11 @@ public class Attractor : CircleInfluencer
     protected float destructorRadius;
     float destructorRadiusSquared;
 
+    protected override float getNavObsRadius()
+    {
+        return destructorRadius;
+    }
+
     private void Update()
     {
         rawInfluenceRadius = Mathf.Max(attractionRadius, destructorRadius);

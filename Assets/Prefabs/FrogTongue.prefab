@@ -133,3 +133,5 @@ MonoBehaviour:
   pointB: {x: 5, y: 0}
   width: 1
   lineRender: {fileID: 696319796631623690}
+  navPrefab: {fileID: 2668177037069904945, guid: ef1ff80a1e91809489d404379dcf130c, type: 3}
+  carvesNavigation: 1

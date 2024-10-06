@@ -1,11 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CircleInfluencer : ObstacleBase
 {
     [SerializeField]
+    NavMeshObstacle navPrefab;
+    
+    [SerializeField]
     protected float rawInfluenceRadius;
+
+    [SerializeField]
+    protected bool carvesNavigation = false;
+
+    NavMeshObstacle navObstacle;
+
+    protected virtual float getNavObsRadius()
+    {
+        return rawInfluenceRadius;
+    }
+
+    protected override NavMeshObstacle GetNavObstacle()
+    {
+        if (navObstacle != null) {
+            return navObstacle;
+        }
+        if (navObstacle == null && carvesNavigation) {
+            navObstacle = GameObject.Instantiate<NavMeshObstacle>(navPrefab);
+            UpdateNavObstacle();
+            return navObstacle;
+        }
+        return null;
+    }
+
+    protected virtual void UpdateNavObstacle()
+    {
+        Vector3 pos = navObstacle.transform.position;
+        pos.x = this.transform.position.x;
+        pos.y = this.transform.position.y;
+        navObstacle.transform.position = pos;
+        navObstacle.radius = getNavObsRadius();
+    }
 
     protected bool PointIsInCircle(float x, float y)
     {
