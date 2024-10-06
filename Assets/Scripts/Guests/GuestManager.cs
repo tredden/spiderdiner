@@ -13,6 +13,19 @@ public struct GuestOrder
         return dishes.Count == 0;
     }
 
+    public int flyAmount {
+		get {
+			if (dishes == null) {
+				return 0;
+			}
+			int total = 0;
+			for (int i = 0; i < dishes.Count; i++) {
+				total += dishes[i].flyAmount;
+			}
+			return total;
+		}
+	}
+
     public bool ReceiveFly(Fly fly) {
         for (int i = 0; i < dishes.Count; i++) {
             if (multiCourse && i > 0) {
@@ -33,7 +46,7 @@ public struct Dish
 {
     public int flyAmount;
     public int spiceLevel;
-    public int color;
+    public FlyColor color;
 
     public bool CheckDone() {
         return flyAmount == 0;
@@ -46,6 +59,8 @@ public struct Dish
         }
         return false;
     }
+
+    public void Clear() {}
 }
 
 public class GuestManager : MonoBehaviour
