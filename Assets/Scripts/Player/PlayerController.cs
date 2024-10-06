@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
 
     BounceWeb activePlacementWeb = null;
 
+    [SerializeField]
+    float distTreshold = 0.5f;
+
     void SetInputMode(InputMode mode)
     {
         inputMode = mode;
@@ -73,7 +76,11 @@ public class PlayerController : MonoBehaviour
         mousePos = Input.mousePosition;
         worldPos = viewCamera.ScreenToWorldPoint(mousePos);
         activePlacementWeb.SetPointB(worldPos.x, worldPos.y);
-        if (Input.GetMouseButtonDown(0)) {
+
+        if (activePlacementWeb.GetDist() >= distTreshold && Input.GetMouseButtonUp(0)) {
+            SetInputMode(InputMode.START_DRAW_WEB);
+            activePlacementWeb = null;
+        } else if (Input.GetMouseButtonDown(0)) {
             SetInputMode(InputMode.START_DRAW_WEB);
             activePlacementWeb = null;
         } else if (Input.GetMouseButtonDown(1)) {

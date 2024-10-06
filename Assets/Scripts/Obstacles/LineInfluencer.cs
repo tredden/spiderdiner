@@ -41,6 +41,11 @@ public class LineInfluencer : ObstacleBase
         UpdateVisual();
     }
 
+    public float GetDist()
+    {
+        return Vector2.Distance(pointA, pointB);
+    }
+
     protected void GetIntersectPoint(ref float x, ref float y, float fx0, float fy0, float fx1, float fy1, float pxa, float pya, float pxb, float pyb)
     {
         fdx = fx1 - fx0;
