@@ -98,7 +98,10 @@ public class GuestManager : MonoBehaviour
         }
         tables.Remove(t);
         if (t.IsOccupied()) {
-            waitingGuests.Add(t.GetGuest());
+            Guest g = t.GetGuest();
+            g.SetStatus(GuestStatus.WAITING_FOR_TABLE);
+            activeGuests.Remove(g);
+            waitingGuests.Add(g);
             t.RemoveGuest();
         }
     }
@@ -106,6 +109,7 @@ public class GuestManager : MonoBehaviour
     public void RegisterGuest(Guest g)
     {
         waitingGuests.Add(g);
+        g.SetStatus(GuestStatus.WAITING_FOR_TABLE);
         g.gameObject.SetActive(false);
     }
 
@@ -130,8 +134,9 @@ public class GuestManager : MonoBehaviour
             return false;
         }
         g.gameObject.SetActive(true);
+        g.SetStatus(GuestStatus.WAITING_FOR_ORDER);
         t.ClearTable();
-        t.RemoveGuest();
+        t.SetGuest(g);
         return true;
     }
 
@@ -159,6 +164,7 @@ public class GuestManager : MonoBehaviour
             bool success = AttemptPlaceGuest(g);
             if (success) {
                 waitingGuests.Remove(g);
+                g.SetStatus(GuestStatus.WAITING_FOR_ORDER);
                 activeGuests.Add(g);
                 // reset timer until guest can be seated
                 timeUntilNextGuest = timePerGuest;
