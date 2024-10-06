@@ -26,6 +26,7 @@ public class FlyManager : MonoBehaviour
     // Active flies
     const int MAX_FLIES = 10000;
     Fly[] flies;
+    Grid grid;
     int lastSpawnedFly = 0;
     [SerializeField]
     int flyCount = 0;
@@ -47,6 +48,7 @@ public class FlyManager : MonoBehaviour
             flies[i] = new Fly();
             flies[i].enabled = false;
         }
+        this.grid = new Grid(300, 300, (int) this.boidsRules.visualRange);
     }
 
     // Update is called once per frame
@@ -55,17 +57,19 @@ public class FlyManager : MonoBehaviour
     {
         dt = Time.deltaTime;
         // Update flies based on boids rules
-        // UpdateBoids(dt);
+        UpdateBoids(dt);
         UpdateObstacles(dt);
         UpdateFlyState(dt);
         UpdateVisuals(dt);
     }
 
-    List<int> neighbors = new List<int>(MAX_FLIES);
-    List<int> protectedNeighbors = new List<int>(MAX_FLIES);
+    List<int> neighborIndices = new List<int>(MAX_FLIES);
+    List<int> candidateNeighbors = new List<int>(MAX_FLIES);
 
     void UpdateBoids(float dt)
     {
+        grid.clear();
+        grid.fill(flies);
         // Update flies based on boids rules
         for (int i = 0; i < flies.Length; i++) {
 			Fly fly = flies[i];
@@ -74,10 +78,10 @@ public class FlyManager : MonoBehaviour
             }
 
             // Separation
-            getNeighborIndices(protectedNeighbors, i, boidsRules.protectedRange);
+            getNeighborIndices(i, boidsRules.protectedRange);
             float close_dx = 0;
             float close_dy = 0;
-            foreach (int neighborIndex in protectedNeighbors) {
+            foreach (int neighborIndex in neighborIndices) {
 				Fly neighbor = flies[neighborIndex];
                 close_dx += fly.x - neighbor.x;
                 close_dy += fly.y - neighbor.y;
@@ -86,17 +90,18 @@ public class FlyManager : MonoBehaviour
             fly.dvy += close_dy * boidsRules.avoidFactor;
 
             // Alignment
-            getNeighborIndices(neighbors, i, boidsRules.visualRange);
+            getNeighborIndices(i, boidsRules.visualRange);
+            int neighborCount = neighborIndices.Count;
             float xvel_avg = 0;
             float yvel_avg = 0;
-            foreach (int neighborIndex in neighbors) {
+            foreach (int neighborIndex in neighborIndices) {
 				Fly neighbor = flies[neighborIndex];
                 xvel_avg += neighbor.vx;
                 yvel_avg += neighbor.vy;
             }
-            if (neighbors.Count > 0) {
-                xvel_avg /= neighbors.Count;
-                yvel_avg /= neighbors.Count;
+            if (neighborCount > 0) {
+                xvel_avg /= neighborCount;
+                yvel_avg /= neighborCount;
             }
             fly.dvx += (xvel_avg - fly.vx) * boidsRules.matchingFactor;
             fly.dvy += (yvel_avg - fly.vy) * boidsRules.matchingFactor;
@@ -104,14 +109,14 @@ public class FlyManager : MonoBehaviour
             // Cohesion
             float xpos_avg = 0;
             float ypos_avg = 0;
-            foreach (int neighborIndex in neighbors) {
+            foreach (int neighborIndex in neighborIndices) {
                 Fly neighbor = flies[neighborIndex];
                 xpos_avg += neighbor.x;
                 ypos_avg += neighbor.y;
             }
-            if (neighbors.Count > 0) {
-                xpos_avg /= neighbors.Count;
-                ypos_avg /= neighbors.Count;
+            if (neighborCount > 0) {
+                xpos_avg /= neighborCount;
+                ypos_avg /= neighborCount;
             }
             fly.dvx += (xpos_avg - fly.x) * boidsRules.centeringFactor;
             fly.dvy += (ypos_avg - fly.y) * boidsRules.centeringFactor;
@@ -119,20 +124,25 @@ public class FlyManager : MonoBehaviour
         }
     }
 
-    void getNeighborIndices(List<int> neighbors, int flyIndex, float radiusSquared) {
-		neighbors.Clear();
-		var fly = flies[flyIndex];
+    void getNeighborIndices(int flyIndex, float radius) {
+		// The grid must be set up before calling this.
+
+        neighborIndices.Clear();
+        var fly = flies[flyIndex];
 
         // TODO: This is horribly inefficient.
-        for (int i = 0; i < flies.Length; i++) {
-            var otherFly = flies[i];
-            if (!otherFly.enabled || i == flyIndex) {
+        this.grid.query(fly.x, fly.y, radius, candidateNeighbors);
+        float radiusSquared = radius * radius;
+        for (int i = 0; i < candidateNeighbors.Count; i++) {
+            int otherFlyIndex = candidateNeighbors[i];
+            var otherFly = flies[otherFlyIndex];
+            if (!otherFly.enabled || otherFlyIndex == flyIndex) {
                 continue;
             }
             float dx = otherFly.x - fly.x;
             float dy = otherFly.y - fly.y;
             if (dx * dx + dy * dy < radiusSquared) {
-				neighbors.Add(i);
+                neighborIndices.Add(otherFlyIndex);
             }
         }
     }
