@@ -207,6 +207,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &313902567 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 9084679272335698271, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
+  m_PrefabInstance: {fileID: 1660972458158864416}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &454180427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -668,9 +673,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
-      propertyPath: pointA.y
-      value: 13
-      objectReference: {fileID: 0}
+      propertyPath: lineRender
+      value: 
+      objectReference: {fileID: 313902567}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -840,7 +845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408467649512878360, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 3408467649512878360, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_LocalPosition.y

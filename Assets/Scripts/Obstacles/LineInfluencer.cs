@@ -11,6 +11,9 @@ public class LineInfluencer : ObstacleBase
     [SerializeField]
     protected float width;
 
+    [SerializeField]
+    SpriteRenderer lineRender;
+
     protected float x;
     protected float y;
 
@@ -38,13 +41,11 @@ public class LineInfluencer : ObstacleBase
             // Debug.Log("f vertical");
             x = fx0;
             float w = (pdy / pdx);
-            // TODO: debug solve for y
             y = w * (x - pxa) + pya;
         } else if (Mathf.Abs(pdx) <= 0.0001f) {
             // Debug.Log("p vertical");
             x = fx0;
             float q = (fdy / fdx);
-            // TODO: debug solve for y
             y = q * (x - fx0) + fy0;
         } else {
             // Debug.Log("no vertical: fdx = " + fdx + ", pdx = " + pdx);
@@ -53,7 +54,6 @@ public class LineInfluencer : ObstacleBase
 
             // y = q(x - fx0) + fy0
             // y = w(x - pxa) + pya
-
             x = (q * fx0 - fy0 - w * pxa + pya) / (q - w);
             y = q * (x - fx0) + fy0;
         }
@@ -123,5 +123,23 @@ public class LineInfluencer : ObstacleBase
         Gizmos.DrawLine(new Vector3(fx0, fy0, 0), new Vector3(fx0 + (fx1 - fx0) * 1000f, fy0 + (fy1 - fy0)*1000f, 0));
         Gizmos.DrawSphere(new Vector3(x, y, 0), 0.25f);
         
+    }
+
+    Vector3 pos;
+    Vector2 size;
+    private void Update()
+    {
+        if (lineRender != null) {
+            pos.x = (pointA.x + pointB.x) / 2f;
+            pos.y = (pointA.y + pointB.y) / 2f;
+            pos.z = -pos.y;
+            float dx = pointB.x - pointA.x;
+            float dy = pointB.y - pointA.y;
+            lineRender.transform.position = pos;
+            transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dy, dx) * Mathf.Rad2Deg);
+            size.x = Mathf.Sqrt(dx * dx + dy * dy);
+            size.y = lineRender.size.y;
+            lineRender.size = size;
+        }
     }
 }
