@@ -14,6 +14,10 @@ public class LineInfluencer : ObstacleBase
 
     [SerializeField]
     SpriteRenderer lineRender;
+    [SerializeField]
+    bool changeLineRenderWidth = false;
+    [SerializeField]
+    bool tryPreserveOrientation = false;
 
     [SerializeField]
     NavMeshObstacle navPrefab;
@@ -66,16 +70,16 @@ public class LineInfluencer : ObstacleBase
     protected virtual void UpdateNavObstacle()
     {
         if (navObstacle != null) {
-            Vector3 pos = navObstacle.transform.position;
-            pos.x = lineRender.transform.position.x;
-            pos.y = lineRender.transform.position.y;
+            Vector3 pos;
+            pos.x = (pointA.x + pointB.x) / 2f;
+            pos.y = (pointA.y + pointB.y) / 2f;
+            pos.z = navObstacle.transform.position.z;
             navObstacle.transform.position = pos;
-            Vector3 euler = lineRender.transform.eulerAngles;
-            euler.y = euler.z;
-            euler.z = 0f;
-            navObstacle.transform.localEulerAngles = euler;
+            float dx = pointB.x - pointA.x;
+            float dy = pointB.y - pointA.y;
+            navObstacle.transform.rotation = Quaternion.Euler(0f, Mathf.Atan2(dy, dx) * Mathf.Rad2Deg, 0f);
             Vector3 scale = navObstacle.transform.localScale;
-            scale.x = GetDist();
+            scale.x = Mathf.Sqrt(dx * dx + dy * dy);
             scale.z = width;
             navObstacle.transform.localScale = scale;
         }
@@ -203,18 +207,35 @@ public class LineInfluencer : ObstacleBase
 
     private void UpdateVisual()
     {
-        if (lineRender != null) {
-            pos.x = (pointA.x + pointB.x) / 2f;
-            pos.y = (pointA.y + pointB.y) / 2f;
-            pos.z = -pos.y;
-            float dx = pointB.x - pointA.x;
-            float dy = pointB.y - pointA.y;
-            lineRender.transform.position = pos;
-            transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dy, dx) * Mathf.Rad2Deg);
-            size.x = Mathf.Sqrt(dx * dx + dy * dy);
-            size.y = lineRender.size.y;
-            lineRender.size = size;
+        pos.x = (pointA.x + pointB.x) / 2f;
+        pos.y = (pointA.y + pointB.y) / 2f;
+        pos.z = -pos.y;
+        float dx = pointB.x - pointA.x;
+        float dy = pointB.y - pointA.y;
+        lineRender.transform.position = pos;
+        float ez = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
+        size.x = Mathf.Sqrt(dx * dx + dy * dy);
+        size.y = changeLineRenderWidth ? width : lineRender.size.y;
+        if (tryPreserveOrientation) {
+            ez = (ez + 360f) % 360f; // cut any weird negative angle below -1 rots, should never happen
+            if (ez <= 45 || ez >= 315) {
+                // Do nothing
+            } else if (ez > 45 && ez < 135) {
+                ez -= 90;
+                float temp = size.x;
+                size.x = size.y;
+                size.y = temp;
+            } else if (ez >= 135 && ez <= 225) {
+                ez -= 180;
+            } else {
+                ez -= 270;
+                float temp = size.x;
+                size.x = size.y;
+                size.y = temp;
+            }
         }
+        lineRender.transform.rotation = Quaternion.Euler(0f, 0f, ez);
+        lineRender.size = size;
     }
 
     private void Update()

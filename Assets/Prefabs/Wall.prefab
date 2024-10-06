@@ -49,6 +49,8 @@ MonoBehaviour:
   pointB: {x: 32, y: -18}
   width: 0.5
   lineRender: {fileID: 6710463316142106879}
+  changeLineRenderWidth: 1
+  tryPreserveOrientation: 1
   navPrefab: {fileID: 2668177037069904945, guid: ef1ff80a1e91809489d404379dcf130c, type: 3}
   carvesNavigation: 1
 --- !u!1 &6591459338174482550
@@ -124,8 +126,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e271a33326c13458c9456e8954c245be, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 03f9bf6235de9453b808286047c204e1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
