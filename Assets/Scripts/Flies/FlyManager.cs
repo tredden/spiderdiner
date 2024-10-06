@@ -261,15 +261,23 @@ public class FlyManager : MonoBehaviour
     {
         posVec = Vector3.zero;
         velVec = Vector3.zero;
-        flyRender.GetParticles(particles, flyRender.particleCount);
+        int activeParticles = flyRender.GetParticles(particles, flyRender.particleCount);
+        if (activeParticles < flyCount) {
+            flyRender.Emit(flyCount - activeParticles);
+            activeParticles = flyRender.GetParticles(particles, flyRender.particleCount);
+        }
         int j = 0;
-        for(int i = 0; i < flyCount; i++) {
+        // Debug.Log("FlyCount = " + flyCount + ", ParticleCount = " + activeParticles);
+        for(int i = 0; i < activeParticles; i++) {
             for (; j < MAX_FLIES; j++) {
                 if (flies[j].enabled) {
                     break;
                 }
             }
-            if (j < MAX_FLIES) {
+            if (i < flyCount) {
+                if (j == MAX_FLIES) {
+                    Debug.LogError("Ran out of particles for active flies!");
+                }
                 Fly fly = flies[j];
                 posVec.x = fly.x;
                 posVec.y = fly.y;
