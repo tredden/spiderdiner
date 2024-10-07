@@ -211,6 +211,7 @@ public class LineInfluencer : ObstacleBase
     Vector3 pos;
     Vector2 size;
 
+    [ExecuteInEditMode]
     private void UpdateVisual()
     {
         pos.x = (pointA.x + pointB.x) / 2f;
@@ -244,6 +245,7 @@ public class LineInfluencer : ObstacleBase
         lineRender.size = size;
     }
 
+    [ExecuteInEditMode]
     private void Update()
     {
         UpdateVisual();

@@ -40,11 +40,9 @@ class Grid {
 		grid[gridX][gridY][gridCounts[gridX][gridY]++] = index;
 	}
 
-	public void fill(Fly[] flies) {
-		for (int i = 0; i < flies.Length; i++) {
-			if (flies[i].enabled) {
-				insert(flies[i].x, flies[i].y, i);
-			}
+	public void fill(Fly[] flies, int flyCount) {
+		for (int i = 0; i < flyCount; i++) {
+			insert(flies[i].x, flies[i].y, i);
 		}
 	}
 

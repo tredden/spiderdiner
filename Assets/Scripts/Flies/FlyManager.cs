@@ -69,9 +69,9 @@ public class FlyManager : MonoBehaviour
     void UpdateBoids(float dt)
     {
         grid.clear();
-        grid.fill(flies);
+        grid.fill(flies, flyCount);
         // Update flies based on boids rules
-        for (int i = 0; i < flies.Length; i++) {
+        for (int i = 0; i < flyCount; i++) {
 			Fly fly = flies[i];
             if (!fly.enabled) {
                 continue;
@@ -172,7 +172,7 @@ public class FlyManager : MonoBehaviour
 
     void UpdateObstacles(float dt)
     {
-        for (int i = 0; i < flies.Length; i++) {
+        for (int i = 0; i < flyCount; i++) {
             // TODO: is this making a copy or not?...
             Fly f = flies[i];
             if (f.enabled) {
@@ -188,7 +188,7 @@ public class FlyManager : MonoBehaviour
 
     void UpdateFlyState(float dt)
     {
-        for (int i = 0; i < flies.Length; i++) {
+        for (int i = 0; i < flyCount; i++) {
             Fly fly = flies[i];
             // check if the fly is disabled this frame
             if (!fly.enabled) {
@@ -198,7 +198,11 @@ public class FlyManager : MonoBehaviour
                 fly.enabled = false;
                 fly.disable = false;
                 flyCount--;
-                flies[i] = fly;
+                if (flyCount > 0) {
+                    flies[i] = flies[flyCount];
+                    flies[flyCount].disable = false;
+                    flies[flyCount].enabled = false;
+                }
                 continue;
             }
             
@@ -230,18 +234,12 @@ public class FlyManager : MonoBehaviour
 
     public bool SpawnFly(Fly details)
     {
-        int start = lastSpawnedFly;
-        while (flies[lastSpawnedFly].enabled) {
-            lastSpawnedFly = (lastSpawnedFly + 1) % MAX_FLIES;
-            if (lastSpawnedFly == start) {
-                Debug.LogError("No more space for flies!");
-                return false;
-            }
+		if (flyCount >= MAX_FLIES) {
+            Debug.LogError("No more space for flies!");
+            return false;
         }
         details.enabled = true;
-
-        details.enabled = true;
-        flies[lastSpawnedFly] = details;
+        flies[flyCount] = details;
         
         posVec.x = details.x;
         posVec.y = details.y;
@@ -249,7 +247,7 @@ public class FlyManager : MonoBehaviour
         velVec.x = details.vx;
         velVec.y = details.vy;
         velVec.z = 0f;
-        flyRender.Emit(posVec, velVec, 1f, 10f, Color.white);
+        flyRender.Emit(posVec, velVec, 1f, 10f, details.getUnityColor());
         flyCount++;
         return true;
     }
@@ -261,37 +259,30 @@ public class FlyManager : MonoBehaviour
     {
         posVec = Vector3.zero;
         velVec = Vector3.zero;
-        int activeParticles = flyRender.GetParticles(particles, flyRender.particleCount);
-        if (activeParticles < flyCount) {
-            flyRender.Emit(flyCount - activeParticles);
-            activeParticles = flyRender.GetParticles(particles, flyRender.particleCount);
+
+        int particleCount = flyRender.GetParticles(particles, flyRender.particleCount);
+        if (particleCount < flyCount) {
+            int delta = flyCount - particleCount;
+            flyRender.Emit(delta);
+            particleCount = flyRender.GetParticles(particles, delta, particleCount);
         }
-        int j = 0;
-        // Debug.Log("FlyCount = " + flyCount + ", ParticleCount = " + activeParticles);
-        for(int i = 0; i < activeParticles; i++) {
-            for (; j < MAX_FLIES; j++) {
-                if (flies[j].enabled) {
-                    break;
-                }
-            }
-            if (i < flyCount) {
-                if (j == MAX_FLIES) {
-                    Debug.LogError("Ran out of particles for active flies!");
-                }
-                Fly fly = flies[j];
-                posVec.x = fly.x;
-                posVec.y = fly.y;
-                posVec.z = -fly.y;
-                velVec.x = fly.vx;
-                velVec.y = fly.vy;
-                velVec.z = 0;
-                particles[i].position = posVec;
-                particles[i].velocity = velVec;
-                particles[i].startColor = (Color.red * (float)fly.spiceLevel + Color.white * (maxSpiceLevel - (float)fly.spiceLevel)) / maxSpiceLevel;
-                j++;
-            } else {
-                particles[i].remainingLifetime = 0f;
-            }
+
+        for(int i = 0; i < flyCount; i++) {
+            Fly fly = flies[i];
+            posVec.x = fly.x;
+            posVec.y = fly.y;
+            posVec.z = -fly.y;
+            velVec.x = fly.vx;
+            velVec.y = fly.vy;
+            velVec.z = 0;
+            particles[i].position = posVec;
+            particles[i].velocity = velVec;
+            //particles[i].startColor = (Color.red * (float)fly.spiceLevel + Color.white * (maxSpiceLevel - (float)fly.spiceLevel)) / maxSpiceLevel;
+            particles[i].startColor = fly.getUnityColor();
+        }
+
+        for (int i = flyCount; i < particleCount; i++) {
+            particles[i].remainingLifetime = 0f;
         }
         flyRender.SetParticles(particles, flyCount);
     }

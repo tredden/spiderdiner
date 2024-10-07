@@ -10,9 +10,6 @@ public class Table : CircleInfluencer
     [SerializeField]
     Guest activeGuest;
 
-    [SerializeField]
-    Dish dish = new Dish();
-
     private void Start()
     {
         base.Start();
@@ -24,21 +21,12 @@ public class Table : CircleInfluencer
         GuestManager.GetInstance().DeregisterTable(this);
     }
 
-    void AddFlyToCount()
-    {
-        particles.Emit(1);
-        dish.flyAmount++;
-        if (activeGuest != null) {
-            activeGuest.UpdateOrderStatus(dish);
-        }
-    }
-
     public void SetGuest(Guest activeGuest)
     {
         this.activeGuest = activeGuest;
+        activeGuest.UpdateText();
         activeGuest.transform.position = this.transform.position;
         activeGuest.transform.parent = this.transform;
-        activeGuest.UpdateOrderStatus(dish);
     }
 
     public void RemoveGuest()
@@ -59,14 +47,25 @@ public class Table : CircleInfluencer
     public void ClearTable()
     {
         particles.Clear();
-        dish.Clear();
+        if (activeGuest != null)
+        {
+            foreach (Dish d in activeGuest.activeOrder.eatenDishes)
+            {
+                // Maybe put tips in the eaten dishes?
+                d.Clear();
+            }
+        }
     }
 
     public override void InfluenceFly(ref Fly fly, float dt)
     {
-        // TODO: needs to trigger an "on influence" function for the table so that guests can eat the flies
+        if (fly.disable || activeGuest == null)
+        {
+            return;
+        }
+        activeGuest.ReceiveFly(fly);
         fly.disable = true;
-        AddFlyToCount();
+        particles.Emit(1);
     }
 
     public void OnDrawGizmos()

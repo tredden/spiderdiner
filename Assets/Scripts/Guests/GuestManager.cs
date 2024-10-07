@@ -3,64 +3,86 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct GuestOrder
+public class GuestOrder
 {
-	List<Dish> dishes;
+	public List<Dish> dishes;
+    public List<Dish> eatenDishes;
     // If true, the guest will require dishes to be served in order.
-    bool multiCourse;
+    public bool multiCourse;
+    public int activeDishIndex = 0;
 
     public bool CheckDone() {
-        return dishes.Count == 0;
+        return activeDishIndex == dishes.Count;
     }
 
-    public int flyAmount {
+    public int fliesEaten {
 		get {
 			if (dishes == null) {
 				return 0;
 			}
 			int total = 0;
 			for (int i = 0; i < dishes.Count; i++) {
-				total += dishes[i].flyAmount;
+				total += dishes[i].fliesEaten;
 			}
 			return total;
 		}
 	}
 
     public bool ReceiveFly(Fly fly) {
-        for (int i = 0; i < dishes.Count; i++) {
-            if (multiCourse && i > 0) {
-                // Only the first dish can receive flies in multi-course mode
-                return false;
+        for (int i = activeDishIndex; i < dishes.Count; i++) {
+            if (multiCourse && i != activeDishIndex) {
+                // Only the active dish can receive flies in multi-course mode
+                break;
             }
-            if (dishes[i].ReceiveFly(fly) && dishes[i].CheckDone()) {
-                dishes.RemoveAt(i);
+            if (dishes[i].ReceiveFly(fly)) {
+				if (dishes[i].CheckDone()) {
+					eatenDishes.Add(dishes[i]);
+                    activeDishIndex++;
+                }
                 return true;
             }
         }
         return false;
     }
+
+    override public string ToString()
+    {
+        string s = "";
+        foreach (Dish dish in dishes)
+        {
+            s += dish.ToString() + "\n";
+        }
+
+        return s.Substring(0, s.Length - 1);
+    }
 }
 
 [System.Serializable]
-public struct Dish
+public class Dish
 {
-    public int flyAmount;
-    public int spiceLevel;
-    public FlyColor color;
+    public int fliesInDish;
+    [HideInInspector]
+    public int fliesEaten;
+    [SerializeField]
+    public Fly targetFly;
 
     public bool CheckDone() {
-        return flyAmount == 0;
+        return fliesEaten == fliesInDish;
     }
 
     public bool ReceiveFly(Fly fly) {
-        if (fly.color == color && fly.spiceLevel == spiceLevel) {
-            flyAmount--;
+        if (fly.color == targetFly.color && fly.spiceLevel == targetFly.spiceLevel) {
+            fliesEaten++;
             return true;
         }
         return false;
     }
 
     public void Clear() {}
+
+    override public string ToString() {
+        return fliesEaten + " / " + fliesInDish;
+    }
 }
 
 public class GuestManager : MonoBehaviour
@@ -136,6 +158,7 @@ public class GuestManager : MonoBehaviour
         g.gameObject.SetActive(true);
         g.SetStatus(GuestStatus.WAITING_FOR_ORDER);
         t.ClearTable();
+        t.RemoveGuest();
         t.SetGuest(g);
         return true;
     }
