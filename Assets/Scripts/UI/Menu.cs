@@ -53,7 +53,7 @@ public class Menu : MonoBehaviour
             title.SetActive(false);
 
             int currlvl;
-            if(page==1){
+            if (page==1) {
                 currlvl = 1;
                 menu1.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 menu1.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
@@ -62,13 +62,14 @@ public class Menu : MonoBehaviour
                 menu1.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 menu1.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
                 for(int i=0;i<3;i++){
-                    if(currlvl+i <= maxlevel){
+                    if(currlvl+i < maxlevel){
+                        int level = currlvl + i;
                         menu1.transform.GetChild(0).GetChild(1).GetChild(i).gameObject.SetActive(true);
                         menu1.transform.GetChild(0).GetChild(1).GetChild(i).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                         menu1.transform.GetChild(0).GetChild(1).GetChild(i).gameObject.GetComponent<Button>().onClick.AddListener(
-                            ()=>sceneController.LoadLevel(currlvl+i)
+                            ()=>sceneController.LoadLevel(level - 1)
                         );
-                        menu1.transform.GetChild(0).GetChild(1).GetChild(i).GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level " + (currlvl + i);
+                        menu1.transform.GetChild(0).GetChild(1).GetChild(i).GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level " + (level);
                     } else {
                         menu1.transform.GetChild(0).GetChild(1).GetChild(i).gameObject.SetActive(false);
                     }
@@ -78,12 +79,13 @@ public class Menu : MonoBehaviour
 
             for(int i=0;i<3;i++){
                 if(currlvl+i <= maxlevel){
+                    int level = currlvl + i;
                     menu2.transform.GetChild(0).GetChild(0).GetChild(i).gameObject.SetActive(true);
                     menu2.transform.GetChild(0).GetChild(0).GetChild(i).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                     menu2.transform.GetChild(0).GetChild(0).GetChild(i).gameObject.GetComponent<Button>().onClick.AddListener(
-                        ()=>sceneController.LoadLevel(currlvl+i)
+                        ()=>sceneController.LoadLevel(level-1)
                     );
-                    menu2.transform.GetChild(0).GetChild(0).GetChild(i).GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level " + (currlvl + i);
+                    menu2.transform.GetChild(0).GetChild(0).GetChild(i).GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level " + (level);
                 }else{
                     menu2.transform.GetChild(0).GetChild(0).GetChild(i).gameObject.SetActive(false);
                 }

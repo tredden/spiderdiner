@@ -75,6 +75,7 @@ public class SceneController : MonoBehaviour
     public void LoadLevel(int level)
     {
         string nextLevel = levelScenes[level];
+        currentLevel = level;
 
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Single);
     }

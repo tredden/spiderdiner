@@ -25,6 +25,8 @@ public class Guest : MonoBehaviour
 
     [SerializeField]
     float waitingForOrderReduceSatisfactionTime = 8;
+    [SerializeField]
+    float waitingTimeAddedPerFly = 0.1f;
     float waitingForOrderReduceSatisfactionTimeLeft = 8;
 
     [SerializeField]
@@ -57,6 +59,12 @@ public class Guest : MonoBehaviour
     public bool ReceiveFly(Fly fly)
     {
         bool received = activeOrder.ReceiveFly(fly);
+        if (received) {
+            //waitingForOrderReduceSatisfactionTimeLeft += waitingTimeAddedPerFly;
+            //waitingForOrderReduceSatisfactionTimeLeft = Mathf.Min(waitingForOrderReduceSatisfactionTimeLeft, waitingForOrderReduceSatisfactionTime);
+            happy = true;
+            waitingForOrderReduceSatisfactionTimeLeft = waitingForOrderReduceSatisfactionTime;
+        }
         orderCanvas.UpdateOrder(activeOrder);
         MyUpdate();
         return received;
@@ -82,7 +90,7 @@ public class Guest : MonoBehaviour
 			StateLog(previousStatus + " -> " + status);
 		}
 
-        if (currentSatisfaction <= 0)
+        if (currentSatisfaction <= 0 && status != GuestStatus.FINISHED)
         {
             SetStatus(GuestStatus.FINISHED);
         }
@@ -104,7 +112,10 @@ public class Guest : MonoBehaviour
                 }
                 break;
             case GuestStatus.WAITING_FOR_ORDER:
-
+                if (previousStatus != GuestStatus.WAITING_FOR_ORDER)
+                {
+                    waitingForOrderReduceSatisfactionTimeLeft = waitingForOrderReduceSatisfactionTime;
+                }
                 if (activeOrder.readyDishes.Count > 0)
                 {
                     SetStatus(GuestStatus.EATING);
@@ -119,10 +130,10 @@ public class Guest : MonoBehaviour
             case GuestStatus.EATING:
                 if (previousStatus != GuestStatus.EATING)
                 {
-					happy = true;
                     eatingTimeLeft = eatingTime;
                 }
 
+				happy = true;
                 // Bounce up and down while eating
                 Vector3 pos = transform.localPosition;
                 pos.y = Mathf.Pow(Mathf.Sin((eatingTimeLeft / eatingBouncePeriod) * Mathf.PI * 2f), eatingBounceSpike) * eatingBounceHeight;
