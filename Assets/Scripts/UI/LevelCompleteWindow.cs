@@ -11,6 +11,8 @@ public class LevelCompleteWindow : MonoBehaviour
     [SerializeField]
     UnityEngine.UI.Button nextLevelButton;
     [SerializeField]
+    UnityEngine.UI.Button retryLevelButton;
+    [SerializeField]
     UnityEngine.UI.Button mainMenuButton;
 
     bool success = false;
@@ -20,7 +22,8 @@ public class LevelCompleteWindow : MonoBehaviour
         this.success = success;
         successText.gameObject.SetActive(success);
         failureText.gameObject.SetActive(!success);
-        nextLevelButton.gameObject.SetActive(SceneController.GetInstance().HasNextLevel());
+        nextLevelButton.gameObject.SetActive(success && SceneController.GetInstance().HasNextLevel());
+        retryLevelButton.gameObject.SetActive(!success);
         this.gameObject.SetActive(true);
         if (success) {
             SceneController.GetInstance().MarkLevelComplete();
@@ -31,6 +34,11 @@ public class LevelCompleteWindow : MonoBehaviour
     public void Hide()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public void RetryLevel()
+    {
+        SceneController.GetInstance().LoadNextLevel();
     }
 
     public void NextLevel()
