@@ -17,6 +17,7 @@ public class SceneController : MonoBehaviour
     [SerializeField]
     string mainMenuScene;
 
+    [SerializeField]
     int currentLevel = -1;
     int highestCompletedLevel = -1;
 

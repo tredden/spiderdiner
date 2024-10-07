@@ -28,13 +28,15 @@ public class LevelCompleteWindow : MonoBehaviour
     public void Show(bool success)
     {
         this.success = success;
-        background.color = success ? successColor : failColor;
-        successText.gameObject.SetActive(success);
-        failureText.gameObject.SetActive(!success);
         bool lastLevel = !SceneController.GetInstance().HasNextLevel();
+
+        background.color = success ? successColor : failColor;
+        successText.gameObject.SetActive(success && !lastLevel);
         lastLevelText.gameObject.SetActive(success && lastLevel);
+        failureText.gameObject.SetActive(!success);
         nextLevelButton.gameObject.SetActive(success && !lastLevel);
         retryLevelButton.gameObject.SetActive(!success);
+
         this.gameObject.SetActive(true);
         if (success) {
             SceneController.GetInstance().MarkLevelComplete();
@@ -49,7 +51,7 @@ public class LevelCompleteWindow : MonoBehaviour
 
     public void RetryLevel()
     {
-        SceneController.GetInstance().LoadNextLevel();
+        SceneController.GetInstance().RetryLevel();
     }
 
     public void NextLevel()

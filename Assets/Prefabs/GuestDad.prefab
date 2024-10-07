@@ -158,13 +158,26 @@ MonoBehaviour:
         spiceLevel: 0
         enabled: 0
         disable: 0
+    readyDishes: []
     eatenDishes: []
     multiCourse: 0
     activeDishIndex: 0
   orderCanvas: {fileID: 846330204721659503}
   status: 0
+  previousStatus: 0
+  ponderingOrderTime: 2
+  ponderingOrderTimeLeft: 2
+  waitingForOrderReduceSatisfactionTime: 8
+  waitingTimeAddedPerFly: 0.1
   eatingTime: 3
   eatingTimeLeft: 3
+  waitingForCheckTime: 1
+  waitingForCheckTimeLeft: 1
+  happy: 1
+  maxSatisfaction: 100
+  eatingBounceHeight: 0.2
+  eatingBouncePeriod: 0.2
+  eatingBounceSpike: 3
 --- !u!1001 &1088686259517696465
 PrefabInstance:
   m_ObjectHideFlags: 0

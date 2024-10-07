@@ -63,10 +63,10 @@ MonoBehaviour:
   - {x: -10, y: -27}
   tongue: {fileID: 6699964310788307945}
   animator: {fileID: 8380916957676414325}
-  earlyOpenTime: 0.5
-  minTongueTime: 2
-  maxTongueTime: 5
-  lateOpenTime: 0.5
+  earlyOpenTime: 0.3
+  minTongueTime: 5
+  maxTongueTime: 10
+  lateOpenTime: 0.1
   minClosedTime: 2
   maxClosedTime: 5
   tongueLeaveSpeed: 60
