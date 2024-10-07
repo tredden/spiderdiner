@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 public class DishText : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class DishText : MonoBehaviour
 		int secondText = dish.fliesInDish;
 		if (dish.fliesEaten >= dish.fliesInDish) {
 			firstText = secondText;
-			text.fontStyle = TMPro.FontStyles.Bold & TMPro.FontStyles.Strikethrough;
+			text.fontStyle = TMPro.FontStyles.Strikethrough;
 		}
 		else
 		{
