@@ -16,7 +16,7 @@ public class SpiderD : MonoBehaviour
     [SerializeField]
     SpriteRenderer spriteRenderer;
 
-    private void Awake()
+    private void Start()
     {
         this.currentPos = transform.position;
         this.targetPos = transform.position;

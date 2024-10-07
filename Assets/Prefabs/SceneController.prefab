@@ -50,9 +50,9 @@ MonoBehaviour:
   - Level_02
   - Level_03
   mainMenuScene: MainMenu
-  menuMusic: {fileID: 0}
-  levelMusic: {fileID: 0}
-  bossMusic: {fileID: 0}
+  menuMusic: {fileID: 8300000, guid: 0bae69d8ec9364841ba36a5616fab49b, type: 3}
+  levelMusic: {fileID: 8300000, guid: 0bae69d8ec9364841ba36a5616fab49b, type: 3}
+  bossMusic: {fileID: 8300000, guid: 1fa725aa6c5d34c6c85c7765e616ebc4, type: 3}
 --- !u!82 &4668867248367563576
 AudioSource:
   m_ObjectHideFlags: 0

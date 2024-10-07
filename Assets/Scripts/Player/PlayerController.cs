@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         viewCamera = GameObject.FindAnyObjectByType<Camera>();
+        if (spiderD == null) {
+            spiderD = FindObjectOfType<SpiderD>();
+        }
     }
 
     // Update is called once per frame

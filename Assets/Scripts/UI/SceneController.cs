@@ -12,6 +12,9 @@ public class SceneController : MonoBehaviour
     List<string> levelScenes;
 
     [SerializeField]
+    List<string> bossLevels;
+
+    [SerializeField]
     string mainMenuScene;
 
     int currentLevel = -1;
@@ -42,8 +45,15 @@ public class SceneController : MonoBehaviour
             Scene s = SceneManager.GetActiveScene();
             if (s.name == mainMenuScene) {
                 currentLevel = -1;
+                PlayMenuMusic();
             } else {
                 currentLevel = levelScenes.IndexOf(s.name);
+                bool isBoss = bossLevels.Contains(s.name);
+                if (isBoss) {
+                    PlayBossMusic();
+                } else {
+                    PlayLevelMusic();
+                }
             }
         } else {
             GameObject.Destroy(this);
