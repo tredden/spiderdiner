@@ -1808,30 +1808,6 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.scalar
       value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 2678100704661559503, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
-      propertyPath: boidsRules.maxSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678100704661559503, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
-      propertyPath: boidsRules.minSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678100704661559503, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
-      propertyPath: boidsRules.avoidFactor
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678100704661559503, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
-      propertyPath: boidsRules.visualRange
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678100704661559503, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
-      propertyPath: boidsRules.matchingFactor
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2678100704661559503, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
-      propertyPath: boidsRules.centeringFactor
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2702035491415060508, guid: 1b4e023e06848b243a03dab83df60fe7, type: 3}
       propertyPath: m_Name
       value: FlyManager

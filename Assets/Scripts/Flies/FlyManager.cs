@@ -4,7 +4,6 @@ using UnityEngine;
 
 [System.Serializable]
 struct BoidsRules {
-    public float turnFactor;
     public float visualRange;
     public float protectedRange;
     public float centeringFactor;
@@ -12,6 +11,9 @@ struct BoidsRules {
     public float matchingFactor;
     public float maxSpeed;
     public float minSpeed;
+    // Factor controlling how quickly the fly's speed returns to minSpeed
+    // 0 is no restitution. 1 is restitution in one second.
+    public float minSpeedRestitution;
 }
 
 [RequireComponent(typeof(ParticleSystem))]
@@ -221,8 +223,13 @@ public class FlyManager : MonoBehaviour
                 fly.vy = fly.vy / speed * boidsRules.maxSpeed;
             }
             if (speed < boidsRules.minSpeed) {
-                fly.vx = fly.vx / speed * boidsRules.minSpeed;
-                fly.vy = fly.vy / speed * boidsRules.minSpeed;
+                // Apply restitution
+                // (1 - restitution) / fly_velocity + restitution * min_velocity
+                float min_vx = fly.vx / speed * boidsRules.minSpeed;
+                float min_vy = fly.vy / speed * boidsRules.minSpeed;
+                float restitution = boidsRules.minSpeedRestitution * dt;
+                fly.vx = (1 - restitution) * fly.vx + restitution * min_vx;
+                fly.vy = (1 - restitution) * fly.vy + restitution * min_vy;
             }
 
             fly.x += fly.vx * dt;

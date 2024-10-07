@@ -48,14 +48,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flyCount: 0
   boidsRules:
-    turnFactor: 0.2
-    visualRange: 20
+    visualRange: 4
     protectedRange: 2
-    centeringFactor: 0.0005
-    avoidFactor: 0.05
-    matchingFactor: 0.05
-    maxSpeed: 3
-    minSpeed: 2
+    centeringFactor: 1
+    avoidFactor: 0.2
+    matchingFactor: 0.5
+    maxSpeed: 10
+    minSpeed: 10
+    minSpeedRestitution: 0.17
   obstacles: []
 --- !u!199 &6065148772068398015
 ParticleSystemRenderer:
