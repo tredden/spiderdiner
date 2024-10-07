@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelScenes:
-  - Level_01
+  - FirstSteps
   - TwoStreamsOneTable
   - TwoSidesNarrowSlit
-  - Level_04
+  - TheMaze
   - SevenTables
   - Godfrogger
   bossLevels:

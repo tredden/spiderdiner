@@ -5,9 +5,17 @@ using UnityEngine;
 public class LevelCompleteWindow : MonoBehaviour
 {
     [SerializeField]
+    UnityEngine.UI.Image background;
+    [SerializeField]
+    Color successColor;
+    [SerializeField]
+    Color failColor;
+    [SerializeField]
     TMPro.TMP_Text successText;
     [SerializeField]
     TMPro.TMP_Text failureText;
+    [SerializeField]
+    TMPro.TMP_Text lastLevelText;
     [SerializeField]
     UnityEngine.UI.Button nextLevelButton;
     [SerializeField]
@@ -20,9 +28,12 @@ public class LevelCompleteWindow : MonoBehaviour
     public void Show(bool success)
     {
         this.success = success;
+        background.color = success ? successColor : failColor;
         successText.gameObject.SetActive(success);
         failureText.gameObject.SetActive(!success);
-        nextLevelButton.gameObject.SetActive(success && SceneController.GetInstance().HasNextLevel());
+        bool lastLevel = !SceneController.GetInstance().HasNextLevel();
+        lastLevelText.gameObject.SetActive(success && lastLevel);
+        nextLevelButton.gameObject.SetActive(success && !lastLevel);
         retryLevelButton.gameObject.SetActive(!success);
         this.gameObject.SetActive(true);
         if (success) {

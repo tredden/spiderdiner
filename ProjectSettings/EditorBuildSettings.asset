@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 7dc190c8e356c4a4697df03cc6d6e826
   - enabled: 1
-    path: Assets/Scenes/Levels/Level_01.unity
+    path: Assets/Scenes/Levels/FirstSteps.unity
     guid: bc0fa7a5676db234694fedf441657c6b
   - enabled: 1
     path: Assets/Scenes/Levels/TwoStreamsOneTable.unity
@@ -18,9 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/TwoSidesNarrowSlit.unity
     guid: a9a035ad397811d439d0f56f031aecf0
   - enabled: 1
-    path: Assets/Scenes/Levels/Level_04.unity
+    path: Assets/Scenes/Levels/TheMaze.unity
     guid: ecf1824abdf73bd4d8ee10eb3d9a7c88
   - enabled: 1
     path: Assets/Scenes/Levels/SevenTables.unity
     guid: 9c4fbac0eb9b16d42b57d0e22f58cd59
+  - enabled: 1
+    path: Assets/Scenes/Levels/Godfrogger.unity
+    guid: d214a97ac0aaa484c8d43d17916deeda
   m_configObjects: {}
