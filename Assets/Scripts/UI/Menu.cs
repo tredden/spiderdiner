@@ -20,6 +20,8 @@ public class Menu : MonoBehaviour
     {
         sceneController = SceneController.GetInstance();
         page = 0;
+        maxlevel = sceneController.GetNumLevels();
+        maxpage = (maxlevel +5)/ 6 + 2;
     }
 
     // Update is called once per frame
@@ -62,7 +64,7 @@ public class Menu : MonoBehaviour
                 menu1.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 menu1.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
                 for(int i=0;i<3;i++){
-                    if(currlvl+i < maxlevel){
+                    if(currlvl+i <= maxlevel){
                         int level = currlvl + i;
                         menu1.transform.GetChild(0).GetChild(1).GetChild(i).gameObject.SetActive(true);
                         menu1.transform.GetChild(0).GetChild(1).GetChild(i).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();

@@ -67,7 +67,7 @@ public class LevelStatusUI : MonoBehaviour
 
     public void UpdateGuestText()
     {
-        guestsText.text = "(" + guestsRemaining + " OF " + maxGuests + " GUESTS REMAINING)";
+        guestsText.text = "" + guestsRemaining + " OF " + maxGuests + " GUESTS REMAINING";
     }
 
     public void UpdateFillBar()

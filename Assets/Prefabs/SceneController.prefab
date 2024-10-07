@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelScenes:
-  - Level_01
+  - FirstSteps
   - TwoStreamsOneTable
   - TwoSidesNarrowSlit
-  - Level_04
+  - TheMaze
   - SevenTables
-  bossLevels: []
+  - Godfrogger
+  bossLevels:
+  - Godfrogger
   mainMenuScene: Main Menu
   menuMusic: {fileID: 8300000, guid: 0bae69d8ec9364841ba36a5616fab49b, type: 3}
   levelMusic: {fileID: 8300000, guid: 0bae69d8ec9364841ba36a5616fab49b, type: 3}

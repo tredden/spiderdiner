@@ -99,6 +99,11 @@ public class SceneController : MonoBehaviour
         return currentLevel < levelScenes.Count - 1;
     }
 
+    public int GetNumLevels()
+    {
+        return levelScenes.Count;
+    }
+
     public int GetHighestCompletedLevel()
     {
         return highestCompletedLevel;
@@ -111,6 +116,9 @@ public class SceneController : MonoBehaviour
 
     public void PlayMenuMusic()
     {
+        if (audioSource.clip == bossMusic) {
+            audioSource.volume *= 2f;
+        }
         if (audioSource.clip != menuMusic && menuMusic != null) {
             audioSource.clip = menuMusic;
             audioSource.Play();
@@ -119,6 +127,9 @@ public class SceneController : MonoBehaviour
 
     public void PlayLevelMusic()
     {
+        if (audioSource.clip == bossMusic) {
+            audioSource.volume *= 2f;
+        }
         if (audioSource.clip != levelMusic && levelMusic != null) {
             audioSource.clip = levelMusic;
             audioSource.Play();
@@ -128,6 +139,7 @@ public class SceneController : MonoBehaviour
     public void PlayBossMusic()
     {
         if (audioSource.clip != bossMusic && bossMusic != null) {
+            audioSource.volume /= 2f;
             audioSource.clip = bossMusic;
             audioSource.Play();
         }
