@@ -74,6 +74,8 @@ public class LevelStatusUI : MonoBehaviour
     {
         Vector3 pos = tipThresholdIndicator.transform.localPosition;
         pos.x = satisfactionTargetFraction * barWidth;
+        tipThresholdIndicator.transform.localPosition = pos;
+
 
         float filledFraction = currentSatisfaction / maxSatisfaction;
         Vector2 size = barFill.rectTransform.sizeDelta;
