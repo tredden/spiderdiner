@@ -47,10 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelScenes:
   - FirstSteps
+  - SimpleThreeRoom
+  - TableRing
   - TwoStreamsOneTable
+  - PolkaDots
   - TwoSidesNarrowSlit
-  - TheMaze
+  - TheRiver
   - SevenTables
+  - TheMaze
+  - BringTheHeat
   - Godfrogger
   bossLevels:
   - Godfrogger
