@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[ExecuteInEditMode]
 public class LineInfluencer : ObstacleBase
 {
     [SerializeField]
@@ -67,7 +68,6 @@ public class LineInfluencer : ObstacleBase
         return null;
     }
 
-    [ExecuteInEditMode]
     protected virtual void UpdateNavObstacle()
     {
         if (navObstacle != null) {
@@ -206,7 +206,6 @@ public class LineInfluencer : ObstacleBase
     Vector3 pos;
     Vector2 size;
 
-    [ExecuteInEditMode]
     private void UpdateVisual()
     {
         pos.x = (pointA.x + pointB.x) / 2f;
@@ -240,7 +239,6 @@ public class LineInfluencer : ObstacleBase
         lineRender.size = size;
     }
 
-    [ExecuteInEditMode]
     private void Update()
     {
         UpdateVisual();
