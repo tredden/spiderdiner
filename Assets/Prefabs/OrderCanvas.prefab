@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 1
+  m_HorizontalFit: 0
   m_VerticalFit: 1
 --- !u!1 &6316676787859610098
 GameObject:
@@ -359,5 +359,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dishTextPrefab: {fileID: 4240282501434168626, guid: c1619e60695834521b3ac7f8096fea62, type: 3}
   dishTexts: []
+  extraStackHeightPerDish: 2.8
   satisfactionBar: {fileID: 4419840241208248648}
   maxBarWidth: 8

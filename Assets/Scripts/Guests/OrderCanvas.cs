@@ -9,6 +9,10 @@ public class OrderCanvas : MonoBehaviour {
 	List<Dish> dishes = new List<Dish>();
 
 	[SerializeField]
+	float extraStackHeightPerDish = 3f;
+	[SerializeField]
+	float bubbleYPadding = .5f;
+	[SerializeField]
 	UnityEngine.UI.Image satisfactionBar;
 	[SerializeField]
 	float maxBarWidth;
@@ -25,14 +29,14 @@ public class OrderCanvas : MonoBehaviour {
 		} else if (dishes.Count > dishTexts.Count) {
 			for (int i = dishTexts.Count; i < dishes.Count; i++) {
 				DishText newText = Instantiate<DishText>(dishTextPrefab, this.transform);
-				newText.transform.localPosition = new Vector3(0, 2 * i, 0);
+				newText.transform.localPosition = new Vector3(0, extraStackHeightPerDish * i + bubbleYPadding, 0);
 				dishTexts.Add(newText);
 			}
 		}
 
 		// Set the height of this canvas to fit all the dishes
 		RectTransform rt = this.GetComponent<RectTransform>();
-		rt.sizeDelta = new Vector2(rt.sizeDelta.x, 2.8f * dishes.Count);
+		rt.sizeDelta = new Vector2(rt.sizeDelta.x, extraStackHeightPerDish * dishes.Count + bubbleYPadding * 2f);
 
 		for (int i = 0; i < dishes.Count; i++) {
 			dishTexts[i].SetDish(dishes[i]);
