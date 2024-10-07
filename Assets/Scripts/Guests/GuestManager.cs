@@ -167,6 +167,8 @@ public class GuestManager : MonoBehaviour
             }
             levelStatusUI.SetMaxSatisfaction(maxSatisfaction);
             levelStatusUI.SetCurrentSatisfaction(currentSatisfaction);
+            levelStatusUI.UpdateGuestText();
+            levelStatusUI.UpdateFillBar();
         }
     }
 
@@ -254,9 +256,8 @@ public class GuestManager : MonoBehaviour
                     fedGuests.Add(g);
                     g.gameObject.SetActive(false);
                     UpdateLevelStatus();
-                } else if (g.GetStatus() == GuestStatus.EATING) {
                     if (waitingGuests.Count == 0 && activeGuests.Count == 0) {
-						ShowDoneScreen();
+                        ShowDoneScreen();
                     }
                 }
             }

@@ -65,12 +65,12 @@ public class LevelStatusUI : MonoBehaviour
         }
     }
 
-    void UpdateGuestText()
+    public void UpdateGuestText()
     {
         guestsText.text = "(" + guestsRemaining + " OF " + maxGuests + " GUESTS REMAINING)";
     }
 
-    void UpdateFillBar()
+    public void UpdateFillBar()
     {
         Vector3 pos = tipThresholdIndicator.transform.localPosition;
         pos.x = satisfactionTargetFraction * barWidth;

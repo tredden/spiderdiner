@@ -1104,8 +1104,12 @@ PrefabInstance:
       value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[0].fliesInDish
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: activeOrder.dishes.Array.data[1].fliesInDish
-      value: 300
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: activeOrder.dishes.Array.data[1].targetFly.color

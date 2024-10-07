@@ -797,6 +797,10 @@ PrefabInstance:
       propertyPath: activeOrder.flyAmount
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[0].fliesInDish
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7721258775970399040, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_Name
       value: GuestDad (2)
@@ -896,6 +900,10 @@ PrefabInstance:
     - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: activeOrder.flyAmount
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7721258775970399040, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_Name
@@ -1719,6 +1727,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1440430158}
     m_Modifications:
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[0].fliesInDish
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7721258775970399040, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_Name
       value: GuestDad
