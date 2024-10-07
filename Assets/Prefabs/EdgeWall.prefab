@@ -131,9 +131,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {x: -5, y: 0}
   pointB: {x: 5, y: 0}
-  width: 0
+  width: 0.5
   lineRender: {fileID: 2913481657081976626}
   changeLineRenderWidth: 0
   tryPreserveOrientation: 0
+  pointACapRender: {fileID: 0}
+  pointBCapRender: {fileID: 0}
+  rotateCaps: 0
   navPrefab: {fileID: 2668177037069904945, guid: ef1ff80a1e91809489d404379dcf130c, type: 3}
   carvesNavigation: 0
