@@ -29,31 +29,29 @@ public class GuestOrder
 	}
 
     public bool ReceiveFly(Fly fly) {
-        for (int i = activeDishIndex; i < dishes.Count; i++) {
-            if (multiCourse && i != activeDishIndex) {
-                // Only the active dish can receive flies in multi-course mode
-                break;
-            }
-            if (dishes[i].ReceiveFly(fly)) {
-				if (dishes[i].CheckDone()) {
-					eatenDishes.Add(dishes[i]);
+		if (multiCourse) {
+            bool ate = dishes[activeDishIndex].ReceiveFly(fly);
+            if (ate) {
+                if (dishes[activeDishIndex].CheckDone()) {
+                    eatenDishes.Add(dishes[activeDishIndex]);
                     activeDishIndex++;
                 }
-                return true;
             }
+            return ate;
+        } else {
+			foreach (Dish d in dishes) {
+                if (d.CheckDone()) {
+                    continue;
+                }
+                if (d.ReceiveFly(fly)) {
+                    if (d.CheckDone()) {
+                        eatenDishes.Add(d);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
-    }
-
-    override public string ToString()
-    {
-        string s = "";
-        foreach (Dish dish in dishes)
-        {
-            s += dish.ToString() + "\n";
-        }
-
-        return s.Substring(0, s.Length - 1);
     }
 }
 
@@ -67,7 +65,7 @@ public class Dish
     public Fly targetFly;
 
     public bool CheckDone() {
-        return fliesEaten == fliesInDish;
+        return fliesEaten >= fliesInDish;
     }
 
     public bool ReceiveFly(Fly fly) {
@@ -79,10 +77,6 @@ public class Dish
     }
 
     public void Clear() {}
-
-    override public string ToString() {
-        return fliesEaten + " / " + fliesInDish;
-    }
 }
 
 public class GuestManager : MonoBehaviour
