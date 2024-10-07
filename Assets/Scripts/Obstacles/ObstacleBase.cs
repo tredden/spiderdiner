@@ -26,23 +26,24 @@ public class ObstacleBase : MonoBehaviour
         OnRemove();
     }
 
-    void OnPlace()
+    public void OnPlace()
     {
         FlyManager.GetInstance().RegisterObstacle(this);
+        //Debug.Log("Getting NavObstacle for : " + this.name);
         NavMeshObstacle obs = GetNavObstacle();
         if (obs != null) {
+            //Debug.Log("Registering NavObstacle for : " + this.name);
             NavManager.GetInstance().RegisterObstacle(this, obs);
-        }
+        } /*else {
+            Debug.Log("Null NavObstacle for : " + this.name);
+        }*/
     }
 
-    void OnRemove()
+    public void OnRemove()
     {
         FlyManager.GetInstance().DeregisterObstacle(this);
-        NavMeshObstacle obs = GetNavObstacle();
-        if (obs != null) {
-            NavManager.GetInstance().DeregisterObstacle(this);
-            ClearNavObstacle();
-        }
+        NavManager.GetInstance().DeregisterObstacle(this);
+        ClearNavObstacle();
     }
 
     public virtual int GetActOrder()

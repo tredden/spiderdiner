@@ -10,8 +10,8 @@ public class NavManager : MonoBehaviour
     [SerializeField]
     NavMeshAgent agentPrefab;
 
-    Dictionary<SpiderD, NavMeshAgent> agents = new Dictionary<SpiderD, NavMeshAgent>();
-    Dictionary<ObstacleBase, NavMeshObstacle> obstacles = new Dictionary<ObstacleBase, NavMeshObstacle>();
+    Dictionary<SpiderD, NavMeshAgent> agents; 
+    Dictionary<ObstacleBase, NavMeshObstacle> obstacles;
 
     public static NavManager GetInstance()
     {
@@ -20,6 +20,8 @@ public class NavManager : MonoBehaviour
 
     private void Awake()
     {
+        agents = new Dictionary<SpiderD, NavMeshAgent>();
+        obstacles = new Dictionary<ObstacleBase, NavMeshObstacle>();
         instance = this;
     }
 

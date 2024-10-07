@@ -67,6 +67,7 @@ public class Frog : CircleInfluencer
         base.Start();
         audioSource = this.GetComponent<AudioSource>();
         animator.SetBool("isOpen", false);
+        tongue.OnRemove();
         tongue.gameObject.SetActive(false);
         timeRemaining = maxClosedTime;
     }
@@ -97,6 +98,7 @@ public class Frog : CircleInfluencer
                     tongue.SetPointA(pointA.x, pointA.y);
                     tongue.SetPointB(pointB.x, pointB.y);
                     tongue.gameObject.SetActive(true);
+                    tongue.OnPlace();
                     tongueMoveTime = (pointBTarget - pointA).magnitude / tongueLeaveSpeed;
                     timeRemaining = tongueMoveTime;
                     tongueStatus++;
@@ -113,6 +115,7 @@ public class Frog : CircleInfluencer
                     break;
                 case TongueStatus.TONGUE_RETRACTING:
                     tongue.gameObject.SetActive(false);
+                    tongue.OnRemove();
                     timeRemaining = lateOpenTime;
                     tongueStatus++;
                     break;

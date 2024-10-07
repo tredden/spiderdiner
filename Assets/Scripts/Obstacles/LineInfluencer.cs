@@ -85,9 +85,6 @@ public class LineInfluencer : ObstacleBase
 
     protected override NavMeshObstacle GetNavObstacle()
     {
-        if (Application.isEditor) {
-            return null;
-        }
         if (navObstacle != null) {
             return navObstacle;
         }
@@ -99,11 +96,15 @@ public class LineInfluencer : ObstacleBase
         return null;
     }
 
+    protected override void ClearNavObstacle()
+    {
+        if (navObstacle != null) {
+            GameObject.Destroy(navObstacle.gameObject);
+        }
+    }
+
     protected virtual void UpdateNavObstacle()
     {
-        if (Application.isEditor) {
-            return;
-        }
         if (navObstacle != null) {
             Vector3 pos;
             pos.x = (pointA.x + pointB.x) / 2f;
