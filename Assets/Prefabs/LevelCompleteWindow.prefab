@@ -96,6 +96,7 @@ MonoBehaviour:
   successText: {fileID: 2201691865241029310}
   failureText: {fileID: 7137900739162305678}
   nextLevelButton: {fileID: 8296943277084183457}
+  retryLevelButton: {fileID: 7107815797134625388}
   mainMenuButton: {fileID: 233884038296852103}
 --- !u!1 &571018202663157907
 GameObject:
