@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[ExecuteInEditMode]
 public class LineInfluencer : ObstacleBase
 {
     [SerializeField]
