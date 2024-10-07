@@ -89,6 +89,11 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    public void RetryLevel()
+    {
+        this.LoadLevel(currentLevel);
+    }
+
     public bool HasNextLevel()
     {
         return currentLevel < levelScenes.Count - 1;

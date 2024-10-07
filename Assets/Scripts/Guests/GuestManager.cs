@@ -109,6 +109,8 @@ public class GuestManager : MonoBehaviour
     LevelStatusUI levelStatusUI;
     [SerializeField]
     LevelCompleteWindow levelCompleteWindow;
+    [SerializeField]
+    float satisfactionTarget = 0.7f;
 
     [SerializeField]
     float timePerGuest = 5f;
@@ -167,6 +169,7 @@ public class GuestManager : MonoBehaviour
             }
             levelStatusUI.SetMaxSatisfaction(maxSatisfaction);
             levelStatusUI.SetCurrentSatisfaction(currentSatisfaction);
+            levelStatusUI.SetSatisfactionTarget(satisfactionTarget);
             levelStatusUI.UpdateGuestText();
             levelStatusUI.UpdateFillBar();
         }
