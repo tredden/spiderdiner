@@ -58,7 +58,7 @@ public class Guest : MonoBehaviour
     {
         bool received = activeOrder.ReceiveFly(fly);
         orderCanvas.UpdateOrder(activeOrder);
-        Update();
+        MyUpdate();
         return received;
     }
 
@@ -73,9 +73,9 @@ public class Guest : MonoBehaviour
             currentSatisfaction -= dt * 2;
         }
 
-        Update();
+        MyUpdate();
     }
-    public void Update()
+    public void MyUpdate()
     {
 		if (previousStatus != status)
 		{
@@ -153,6 +153,7 @@ public class Guest : MonoBehaviour
                 break;
         }
         this.previousStatus = this.status;
+        orderCanvas.UpdateSatisfaction(GetCurrentSatisfaction(), GetMaxSatisfaction());
     }
 
     private void StateLog(string message)
@@ -184,6 +185,6 @@ public class Guest : MonoBehaviour
     public void SetStatus(GuestStatus status)
     {
         this.status = status;
-        this.Update();
+        this.MyUpdate();
     }
 }
