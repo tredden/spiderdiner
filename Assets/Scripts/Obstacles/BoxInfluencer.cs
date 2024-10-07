@@ -28,6 +28,9 @@ public class BoxInfluencer : ObstacleBase
 
     protected override NavMeshObstacle GetNavObstacle()
     {
+        if (Application.isEditor) {
+            return null;
+        }
         if (navObstacle != null) {
             return navObstacle;
         }
@@ -41,6 +44,9 @@ public class BoxInfluencer : ObstacleBase
 
     protected virtual void UpdateNavObstacle()
     {
+        if (Application.isEditor) {
+            return;
+        }
         if (navObstacle != null) {
             Vector3 pos;
             pos.x = bounds.center.x;
