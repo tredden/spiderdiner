@@ -56,7 +56,7 @@ public class SceneController : MonoBehaviour
                 }
             }
         } else {
-            GameObject.Destroy(this);
+            GameObject.Destroy(this.gameObject);
         }
     }
 

@@ -61,6 +61,28 @@ public class LineInfluencer : ObstacleBase
         UpdateNavObstacle();
     }
 
+    public bool IsPointInRegion(float px, float py, float addedWidth)
+    {
+        float x = 0f;
+        float y = 0f;
+        GetIntersectPoint(ref x, ref y, px, py, px, py, pointA.x, pointA.y, pointB.x, pointB.y);
+        return IsInterectPointInBounds(x, y, width + addedWidth, px, px, py, py, Mathf.Min(pointA.x, pointB.x), Mathf.Max(pointA.x, pointB.x), Mathf.Min(pointA.y, pointB.y), Mathf.Max(pointA.y, pointB.y));
+    }
+
+    // 0 = pointA, 1 = pointB
+    public int GetCloserEndpoint(float px, float py)
+    {
+        float dax = pointA.x - px;
+        float day = pointA.y - py;
+        float da2 = dax * dax + day * day;
+
+        float dbx = pointB.x - px;
+        float dby = pointB.y - py;
+        float db2 = dbx * dbx + dby * dby;
+
+        return da2 <= db2 ? 0 : 1;
+    }
+
     protected override NavMeshObstacle GetNavObstacle()
     {
         if (Application.isEditor) {
@@ -149,6 +171,22 @@ public class LineInfluencer : ObstacleBase
         }
     }
 
+    protected bool IsInterectPointInBounds(float x, float y, float width, float fxMin, float fxMax, float fyMin, float fyMax, float pxMin, float pxMax, float pyMin, float pyMax)
+    {
+        // now check that x,y is on <f1 - f0> and on <B - A>
+        bool xfMinCheck = x >= fxMin - width / 2f;
+        bool xfMaxCheck = x <= fxMax + width / 2f;
+        bool xpMinCheck = x >= pxMin - width / 2f;
+        bool xpMaxCheck = x <= pxMax + width / 2f;
+        bool yfMinCheck = y >= fyMin - width / 2f;
+        bool yfMaxCheck = y <= fyMax + width / 2f;
+        bool ypMinCheck = y >= pyMin - width / 2f;
+        bool ypMaxCheck = y <= pyMax + width / 2f;
+
+        // Debug.Log("fx0 = " + fx0 + ", fdx = "+fdx+", fy0 = " + fy0 + ", fdy = " + fdy + ", x = " + x + ", y = " + y + ", xfMinCheck: " + xfMinCheck + ", xfMaxCheck: " + xfMaxCheck + ", xpMinCheck: " + xpMinCheck + ", xpMaxCheck: " + xpMaxCheck + ", yfMinCheck: " + yfMinCheck + ", yfMaxCheck: " + yfMaxCheck + ", ypMinCheck: " + ypMinCheck + ", ypMaxCheck: " + ypMaxCheck);
+        return xfMinCheck && xfMaxCheck && xpMinCheck && xpMaxCheck && yfMinCheck && yfMaxCheck && ypMinCheck && ypMaxCheck;
+    }
+
     public override bool GetDoesInteract(ref Fly fly, float dt)
     {
         float pxa = pointA.x;
@@ -178,18 +216,7 @@ public class LineInfluencer : ObstacleBase
 
         GetIntersectPoint(ref x, ref y, fx0, fy0, fx1, fy1, pxa, pya, pxb, pyb);
 
-        // now check that x,y is on <f1 - f0> and on <B - A>
-        bool xfMinCheck = x >= fxMin - width / 2f;
-        bool xfMaxCheck = x <= fxMax + width / 2f;
-        bool xpMinCheck = x >= pxMin - width / 2f;
-        bool xpMaxCheck = x <= pxMax + width / 2f;
-        bool yfMinCheck = y >= fyMin - width / 2f;
-        bool yfMaxCheck = y <= fyMax + width / 2f;
-        bool ypMinCheck = y >= pyMin - width / 2f;
-        bool ypMaxCheck = y <= pyMax + width / 2f;
-
-        // Debug.Log("fx0 = " + fx0 + ", fdx = "+fdx+", fy0 = " + fy0 + ", fdy = " + fdy + ", x = " + x + ", y = " + y + ", xfMinCheck: " + xfMinCheck + ", xfMaxCheck: " + xfMaxCheck + ", xpMinCheck: " + xpMinCheck + ", xpMaxCheck: " + xpMaxCheck + ", yfMinCheck: " + yfMinCheck + ", yfMaxCheck: " + yfMaxCheck + ", ypMinCheck: " + ypMinCheck + ", ypMaxCheck: " + ypMaxCheck);
-        return xfMinCheck && xfMaxCheck && xpMinCheck && xpMaxCheck && yfMinCheck && yfMaxCheck && ypMinCheck && ypMaxCheck;
+        return IsInterectPointInBounds(x, y, width, fxMin, fxMax, fyMin, fyMax, pxMin, pxMax, pyMin, pyMax);
     }
 
     public override int GetActOrder()
@@ -270,7 +297,18 @@ public class LineInfluencer : ObstacleBase
         }
     }
 
-    [ExecuteInEditMode]
+    public void SetHighlight(bool value)
+    {
+        // TODO: render stuff here
+        lineRender.color = value ? Color.yellow : Color.white;
+        if (pointACapRender != null) {
+            pointACapRender.color = value ? Color.yellow : Color.white;
+        }
+        if (pointBCapRender != null) {
+            pointBCapRender.color = value ? Color.yellow : Color.white;
+        }
+    }
+
     private void Update()
     {
         UpdateVisual();
