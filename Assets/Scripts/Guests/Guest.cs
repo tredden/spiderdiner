@@ -98,10 +98,10 @@ public class Guest : MonoBehaviour
     }
     public void MyUpdate()
     {
-		if (previousStatus != status)
-		{
-			StateLog(previousStatus + " -> " + status);
-		}
+		//if (previousStatus != status)
+		//{
+		//	StateLog(previousStatus + " -> " + status);
+		//}
 
         if (currentSatisfaction <= 0 && status != GuestStatus.FINISHED)
         {
@@ -136,7 +136,7 @@ public class Guest : MonoBehaviour
                 if (waitingForOrderReduceSatisfactionTimeLeft <= 0)
                 {
                     SetHappy(false);
-                    StateLog("Guest is unhappy.");
+                    // StateLog("Guest is unhappy.");
                     // TODO: visual indicator it's this person
                 }
 
@@ -202,10 +202,10 @@ public class Guest : MonoBehaviour
         happy = value;
     }
 
-    private void StateLog(string message)
-    {
-        Debug.Log("Guest \"" + this.name + "\": " + message);
-    }
+    //private void StateLog(string message)
+    //{
+    //    // Debug.Log("Guest \"" + this.name + "\": " + message);
+    //}
 
     private void Start()
     {
