@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
         if (spiderD == null) {
             spiderD = FindObjectOfType<SpiderD>();
         }
+        foreach (BounceWeb web in GameObject.FindObjectsOfType<BounceWeb>(true)) {
+            placedWebs.Add(web);
+        }
     }
 
     // Update is called once per frame

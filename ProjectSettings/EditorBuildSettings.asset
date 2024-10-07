@@ -26,4 +26,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Godfrogger.unity
     guid: d214a97ac0aaa484c8d43d17916deeda
+  - enabled: 1
+    path: Assets/Scenes/Levels/BringTheHeat.unity
+    guid: cc63b1df8873990479e8935a5aba736c
+  - enabled: 1
+    path: Assets/Scenes/Levels/PolkaDots.unity
+    guid: 374796fa831607d449f2ed4af5eb904e
+  - enabled: 1
+    path: Assets/Scenes/Levels/SimpleThreeRoom.unity
+    guid: 1df78d52fe3e5d440af17c3fb3d05248
+  - enabled: 1
+    path: Assets/Scenes/Levels/TableRing.unity
+    guid: 035ea2725f6f66040851a1f88cdb1574
+  - enabled: 1
+    path: Assets/Scenes/Levels/TheRiver.unity
+    guid: 77910e687f44e4844a5958fc455217ee
   m_configObjects: {}

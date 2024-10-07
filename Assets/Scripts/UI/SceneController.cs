@@ -60,6 +60,15 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            if (SceneManager.GetActiveScene().name != mainMenuScene) {
+                LoadMainMenu();
+            }
+        }
+    }
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(mainMenuScene, LoadSceneMode.Single);
