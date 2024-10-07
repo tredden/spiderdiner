@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Frog : CircleInfluencer
 {
     enum TongueStatus
@@ -27,6 +28,11 @@ public class Frog : CircleInfluencer
     FrogTongue tongue;
     [SerializeField]
     Animator animator;
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip tongueOutSound;
+    [SerializeField]
+    AudioClip tongueInSound;
 
     [SerializeField]
     float earlyOpenTime;
@@ -59,6 +65,7 @@ public class Frog : CircleInfluencer
     protected override void Start()
     {
         base.Start();
+        audioSource = this.GetComponent<AudioSource>();
         animator.SetBool("isOpen", false);
         tongue.gameObject.SetActive(false);
         timeRemaining = maxClosedTime;
@@ -80,6 +87,7 @@ public class Frog : CircleInfluencer
                 case TongueStatus.MOUTH_CLOSED:
                     animator.SetBool("isOpen", true);
                     timeRemaining = earlyOpenTime;
+                    audioSource.PlayOneShot(tongueOutSound);
                     tongueStatus++;
                     break;
                 case TongueStatus.MOUTH_OPEN_EARLY:
@@ -100,6 +108,7 @@ public class Frog : CircleInfluencer
                 case TongueStatus.TONGUE_EXTENDED:
                     tongueMoveTime = (pointBTarget - pointA).magnitude / tongueReturnSpeed;
                     timeRemaining = tongueMoveTime;
+                    audioSource.PlayOneShot(tongueInSound);
                     tongueStatus++;
                     break;
                 case TongueStatus.TONGUE_RETRACTING:
