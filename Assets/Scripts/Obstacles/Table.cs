@@ -60,13 +60,16 @@ public class Table : CircleInfluencer
 
     public override void InfluenceFly(ref Fly fly, float dt)
     {
-        if (fly.disable || activeGuest == null)
+        if (fly.disable) {
+            return;
+        }
+        fly.disable = true;
+        particles.Emit(1);
+        if (activeGuest == null)
         {
             return;
         }
         activeGuest.ReceiveFly(fly);
-        fly.disable = true;
-        particles.Emit(1);
     }
 
     public override void OnDrawGizmos()
