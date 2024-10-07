@@ -179,7 +179,7 @@ MonoBehaviour:
   eatingBounceHeight: 0.2
   eatingBouncePeriod: 0.2
   eatingBounceSpike: 3
-  seatedSound: {fileID: 8300000, guid: 640c817f478ab49f6ab280ef16a90476, type: 3}
+  seatedSound: {fileID: 8300000, guid: d8aa5a3413f044c6db7fc9e30311496d, type: 3}
   eatingSound: {fileID: 8300000, guid: b1b062a512d6a43b382fe345c3c70748, type: 3}
   happySound: {fileID: 8300000, guid: 8ff06b71c1ebb430197dcdb2609a86d9, type: 3}
   angrySound: {fileID: 8300000, guid: cb0dc8d26acf04240ac5e821e88be6f9, type: 3}
