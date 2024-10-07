@@ -4,6 +4,8 @@ using UnityEngine;
 public class OrderCanvas : MonoBehaviour {
 	public DishText dishTextPrefab;
 	List<DishText> dishTexts = new List<DishText>();
+	[SerializeField]
+	RectTransform Bubble;
 
 	public void UpdateOrder(GuestOrder order) {
  
@@ -19,7 +21,7 @@ public class OrderCanvas : MonoBehaviour {
 				dishTexts.Add(newText);
 			}
 		}
-		
+
 		for (int i = 0; i < order.dishes.Count; i++) {
 			dishTexts[i].SetDish(order.dishes[i]);
 		}
