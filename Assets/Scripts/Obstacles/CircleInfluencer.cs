@@ -24,6 +24,9 @@ public class CircleInfluencer : ObstacleBase
 
     protected override NavMeshObstacle GetNavObstacle()
     {
+        if (Application.isEditor) {
+            return null;
+        }
         if (navObstacle != null) {
             return navObstacle;
         }
@@ -37,6 +40,9 @@ public class CircleInfluencer : ObstacleBase
 
     protected virtual void UpdateNavObstacle()
     {
+        if (Application.isEditor) {
+            return;
+        }
         Vector3 pos = navObstacle.transform.position;
         pos.x = this.transform.position.x;
         pos.y = this.transform.position.y;

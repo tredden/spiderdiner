@@ -57,6 +57,9 @@ public class LineInfluencer : ObstacleBase
 
     protected override UnityEngine.AI.NavMeshObstacle GetNavObstacle()
     {
+        if (Application.isEditor) {
+            return null;
+        }
         if (navObstacle != null) {
             return navObstacle;
         }
@@ -70,6 +73,9 @@ public class LineInfluencer : ObstacleBase
 
     protected virtual void UpdateNavObstacle()
     {
+        if (Application.isEditor) {
+            return;
+        }
         if (navObstacle != null) {
             Vector3 pos;
             pos.x = (pointA.x + pointB.x) / 2f;
