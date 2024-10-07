@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum GuestStatus { UNSET = 0, WAITING_FOR_TABLE, PONDERING_ORDER, WAITING_FOR_ORDER, EATING, WAITING_FOR_CHECK, FINISHED };
 
+[RequireComponent(typeof(AudioSource))]
 public class Guest : MonoBehaviour
 {
     [SerializeField]
@@ -53,6 +54,18 @@ public class Guest : MonoBehaviour
     [SerializeField]
     float eatingBounceSpike = 3f;
 
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip seatedSound;
+    [SerializeField]
+    AudioClip eatingSound;
+    [SerializeField]
+    AudioClip happySound;
+    [SerializeField]
+    AudioClip angrySound;
+    [SerializeField]
+    AudioClip finishedSound;
+
     public void UpdateText() {
         orderCanvas.UpdateOrder(activeOrder);
     }
@@ -62,7 +75,7 @@ public class Guest : MonoBehaviour
         if (received) {
             //waitingForOrderReduceSatisfactionTimeLeft += waitingTimeAddedPerFly;
             //waitingForOrderReduceSatisfactionTimeLeft = Mathf.Min(waitingForOrderReduceSatisfactionTimeLeft, waitingForOrderReduceSatisfactionTime);
-            happy = true;
+            SetHappy(true);
             waitingForOrderReduceSatisfactionTimeLeft = waitingForOrderReduceSatisfactionTime;
         }
         orderCanvas.UpdateOrder(activeOrder);
@@ -122,8 +135,9 @@ public class Guest : MonoBehaviour
                 }
                 if (waitingForOrderReduceSatisfactionTimeLeft <= 0)
                 {
-                    happy = false;
+                    SetHappy(false);
                     StateLog("Guest is unhappy.");
+                    // TODO: visual indicator it's this person
                 }
 
                 break;
@@ -133,7 +147,7 @@ public class Guest : MonoBehaviour
                     eatingTimeLeft = eatingTime;
                 }
 
-				happy = true;
+                SetHappy(true);
                 // Bounce up and down while eating
                 Vector3 pos = transform.localPosition;
                 pos.y = Mathf.Pow(Mathf.Sin((eatingTimeLeft / eatingBouncePeriod) * Mathf.PI * 2f), eatingBounceSpike) * eatingBounceHeight;
@@ -172,6 +186,22 @@ public class Guest : MonoBehaviour
         orderCanvas.UpdateSatisfaction(GetCurrentSatisfaction(), GetMaxSatisfaction());
     }
 
+    void SetHappy(bool value)
+    {
+        if (happy && !value) {
+            // becoming angry
+            if (angrySound != null) {
+                audioSource.PlayOneShot(angrySound);
+            }
+        } else if (!happy && value) {
+            // becoming happy
+            if (happySound != null) {
+                audioSource.PlayOneShot(happySound);
+            }
+        }
+        happy = value;
+    }
+
     private void StateLog(string message)
     {
         Debug.Log("Guest \"" + this.name + "\": " + message);
@@ -180,6 +210,7 @@ public class Guest : MonoBehaviour
     private void Start()
     {
         currentSatisfaction = maxSatisfaction;
+        audioSource = this.GetComponent<AudioSource>();
         GuestManager.GetInstance().RegisterGuest(this);
     }
 
@@ -201,6 +232,25 @@ public class Guest : MonoBehaviour
     public void SetStatus(GuestStatus status)
     {
         this.status = status;
+        switch(status) {
+            case GuestStatus.EATING:
+                if (eatingSound != null) {
+                    audioSource.PlayOneShot(eatingSound);
+                }
+                break;
+            case GuestStatus.WAITING_FOR_CHECK:
+                if (finishedSound != null) {
+                    audioSource.PlayOneShot(finishedSound);
+                }
+                break;
+            case GuestStatus.PONDERING_ORDER:
+                if (seatedSound != null) {
+                    audioSource.PlayOneShot(seatedSound);
+                }
+                break;
+            default:
+                break;
+        }
         this.MyUpdate();
     }
 }
