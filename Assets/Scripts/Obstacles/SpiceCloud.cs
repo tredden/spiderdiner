@@ -13,7 +13,7 @@ public class SpiceCloud : CircleInfluencer
 
     public override void InfluenceFly(ref Fly fly, float dt)
     {
-        fly.spiceLevel += 1;
+        fly.color = FlyColor.RED;
     }
 
     public override int GetActOrder()
