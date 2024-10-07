@@ -84,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2003415934432117643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,9 +202,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 639672803437160465, guid: dfc149afe00391747832d2aa328b5999, type: 3}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 639672803437160465, guid: dfc149afe00391747832d2aa328b5999, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 640a54cff3d6b42c1a2201ba4ca6f9c8, type: 3}
+    - target: {fileID: 639672803437160465, guid: dfc149afe00391747832d2aa328b5999, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 21.87
+      objectReference: {fileID: 0}
     - target: {fileID: 2176977073386648400, guid: dfc149afe00391747832d2aa328b5999, type: 3}
       propertyPath: m_Name
       value: LevelProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 3640607222474239501, guid: dfc149afe00391747832d2aa328b5999, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
