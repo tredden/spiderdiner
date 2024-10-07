@@ -10,6 +10,8 @@ public class LevelStatusUI : MonoBehaviour
     UnityEngine.UI.Image barFill;
     [SerializeField]
     UnityEngine.UI.Image tipThresholdIndicator;
+    [SerializeField]
+    bool updateFillColor = false;
 
     [SerializeField]
     float barWidth = 100;
@@ -81,6 +83,8 @@ public class LevelStatusUI : MonoBehaviour
         Vector2 size = barFill.rectTransform.sizeDelta;
         size.x = filledFraction * barWidth;
         barFill.rectTransform.sizeDelta = size;
-        barFill.color = filledFraction < 0.5 ? Color.Lerp(Color.red, Color.yellow, filledFraction * 2f) : Color.Lerp(Color.yellow, Color.green, filledFraction * 2f - 1f);
+        if (updateFillColor) {
+            barFill.color = filledFraction < 0.5 ? Color.Lerp(Color.red, Color.yellow, filledFraction * 2f) : Color.Lerp(Color.yellow, Color.green, filledFraction * 2f - 1f);
+        }
     }
 }
