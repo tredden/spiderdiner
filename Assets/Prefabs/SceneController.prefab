@@ -49,6 +49,7 @@ MonoBehaviour:
   - Level_01
   - Level_02
   - Level_03
+  bossLevels: []
   mainMenuScene: MainMenu
   menuMusic: {fileID: 8300000, guid: 0bae69d8ec9364841ba36a5616fab49b, type: 3}
   levelMusic: {fileID: 8300000, guid: 0bae69d8ec9364841ba36a5616fab49b, type: 3}
@@ -64,10 +65,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
