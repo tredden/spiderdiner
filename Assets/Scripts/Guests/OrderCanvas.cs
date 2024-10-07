@@ -5,8 +5,6 @@ public class OrderCanvas : MonoBehaviour {
 	public DishText dishTextPrefab;
 	List<DishText> dishTexts = new List<DishText>();
 	[SerializeField]
-	RectTransform Bubble;
-
 	public void UpdateOrder(GuestOrder order) {
  
 		if (order.dishes.Count < dishTexts.Count) {
@@ -21,6 +19,10 @@ public class OrderCanvas : MonoBehaviour {
 				dishTexts.Add(newText);
 			}
 		}
+
+		// Set the height of this canvas to fit all the dishes
+		RectTransform rt = this.GetComponent<RectTransform>();
+		rt.sizeDelta = new Vector2(rt.sizeDelta.x, 2.8f * order.dishes.Count);
 
 		for (int i = 0; i < order.dishes.Count; i++) {
 			dishTexts[i].SetDish(order.dishes[i]);
