@@ -6,13 +6,26 @@ using UnityEngine;
 public class GuestOrder
 {
 	public List<Dish> dishes;
+    public List<Dish> readyDishes;
     public List<Dish> eatenDishes;
     // If true, the guest will require dishes to be served in order.
     public bool multiCourse;
     public int activeDishIndex = 0;
 
     public bool CheckDone() {
-        return activeDishIndex == dishes.Count;
+        foreach (Dish d in dishes) {
+            if (!d.CheckDone()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void EatDish() {
+        if (readyDishes.Count > 0) {
+            eatenDishes.Add(readyDishes[0]);
+            readyDishes.RemoveAt(0);
+        }
     }
 
     public int fliesEaten {
@@ -33,7 +46,7 @@ public class GuestOrder
             bool ate = dishes[activeDishIndex].ReceiveFly(fly);
             if (ate) {
                 if (dishes[activeDishIndex].CheckDone()) {
-                    eatenDishes.Add(dishes[activeDishIndex]);
+                    readyDishes.Add(dishes[activeDishIndex]);
                     activeDishIndex++;
                 }
             }
@@ -45,7 +58,7 @@ public class GuestOrder
                 }
                 if (d.ReceiveFly(fly)) {
                     if (d.CheckDone()) {
-                        eatenDishes.Add(d);
+                        readyDishes.Add(d);
                     }
                     return true;
                 }
@@ -221,7 +234,7 @@ public class GuestManager : MonoBehaviour
             bool success = AttemptPlaceGuest(g);
             if (success) {
                 waitingGuests.Remove(g);
-                g.SetStatus(GuestStatus.WAITING_FOR_ORDER);
+                g.SetStatus(GuestStatus.PONDERING_ORDER);
                 activeGuests.Add(g);
                 // reset timer until guest can be seated
                 timeUntilNextGuest = timePerGuest;
@@ -234,14 +247,17 @@ public class GuestManager : MonoBehaviour
         foreach (Table t in tables) {
             if (t.IsOccupied()) {
                 Guest g = t.GetGuest();
-                if (g.GetStatus() == GuestStatus.WAITING_FOR_CHECK) {
+                g.Tick(dt);
+                if (g.GetStatus() == GuestStatus.FINISHED) {
                     activeGuests.Remove(g);
                     t.RemoveGuest();
                     fedGuests.Add(g);
                     g.gameObject.SetActive(false);
                     UpdateLevelStatus();
                 } else if (g.GetStatus() == GuestStatus.EATING) {
-                    g.UpdateEatingTime(dt);
+                    if (waitingGuests.Count == 0 && activeGuests.Count == 0) {
+						ShowDoneScreen();
+                    }
                 }
             }
         }

@@ -14,15 +14,35 @@ public class Guest : MonoBehaviour
     OrderCanvas orderCanvas;
 
     [SerializeField]
-    GuestStatus status = GuestStatus.UNSET;
-    [SerializeField]
-    float eatingTime = 15;
-    [SerializeField]
-    float eatingTimeLeft = 15;
+    private GuestStatus status = GuestStatus.UNSET;
 
     [SerializeField]
-    float maxSatisfaction;
-    float currentSatisfaction;
+    private GuestStatus previousStatus = GuestStatus.UNSET;
+    [SerializeField]
+    float ponderingOrderTime = 2;
+    [SerializeField]
+    float ponderingOrderTimeLeft = 2;
+
+    [SerializeField]
+    float waitingForOrderReduceSatisfactionTime = 8;
+    float waitingForOrderReduceSatisfactionTimeLeft = 8;
+
+    [SerializeField]
+    float eatingTime = 5;
+    [SerializeField]
+    float eatingTimeLeft = 5;
+
+    [SerializeField]
+    float waitingForCheckTime = 4;
+    [SerializeField]
+    float waitingForCheckTimeLeft = 4;
+
+    [SerializeField]
+    bool happy = true;
+
+    [SerializeField]
+    float maxSatisfaction = 100;
+    float currentSatisfaction = 100;
 
     public void UpdateText() {
         orderCanvas.UpdateOrder(activeOrder);
@@ -31,32 +51,106 @@ public class Guest : MonoBehaviour
     {
         bool received = activeOrder.ReceiveFly(fly);
         orderCanvas.UpdateOrder(activeOrder);
-        if (received)
-        {
-            CheckForSatisfied(activeOrder);
-        }
-        // Possibly animate eating...
+        Update();
         return received;
     }
-    void CheckForSatisfied(GuestOrder order)
+
+    public void Tick(float dt)
     {
-        bool orderDone = order.CheckDone();
-        if (status == GuestStatus.WAITING_FOR_ORDER && orderDone) {
-            // Guest has all the flies they need and are ready to eat
-            SetStatus(GuestStatus.EATING);
+        ponderingOrderTimeLeft -= dt;
+        waitingForOrderReduceSatisfactionTimeLeft -= dt;
+        eatingTimeLeft -= dt;
+        waitingForCheckTimeLeft -= dt;
+
+        if (!happy) {
+            currentSatisfaction -= dt * 2;
         }
-        else if (status == GuestStatus.EATING) {
-        } else if (status != GuestStatus.WAITING_FOR_ORDER) {
-            SetStatus(GuestStatus.WAITING_FOR_ORDER);
+
+        Update();
+    }
+    public void Update()
+    {
+		if (previousStatus != status)
+		{
+			StateLog(previousStatus + " -> " + status);
+		}
+
+        switch (status)
+        {
+            case GuestStatus.WAITING_FOR_TABLE:
+                // GuestManager will handle placing the guest at a table.
+                // TODO?: Lose satisfaction if waiting too long?
+                break;
+            case GuestStatus.PONDERING_ORDER:
+                if (previousStatus != GuestStatus.PONDERING_ORDER)
+                {
+					ponderingOrderTimeLeft = ponderingOrderTime;
+                }
+                if (ponderingOrderTimeLeft <= 0)
+                {
+                    SetStatus(GuestStatus.WAITING_FOR_ORDER);
+                }
+                break;
+            case GuestStatus.WAITING_FOR_ORDER:
+
+                if (activeOrder.readyDishes.Count > 0)
+                {
+                    SetStatus(GuestStatus.EATING);
+                }
+                if (waitingForOrderReduceSatisfactionTimeLeft <= 0)
+                {
+                    happy = false;
+                    StateLog("Guest is unhappy.");
+                }
+
+                break;
+            case GuestStatus.EATING:
+                if (previousStatus != GuestStatus.EATING)
+                {
+					happy = true;
+                    eatingTimeLeft = eatingTime;
+                }
+
+                // Bounce up and down while eating
+                Vector3 pos = this.transform.position;
+                pos.y = Mathf.Sin(eatingTimeLeft) * 10f;
+                this.transform.position = pos;
+
+                if (eatingTimeLeft <= 0)
+                {
+                    activeOrder.EatDish();
+                    if (activeOrder.CheckDone())
+                    {
+                        SetStatus(GuestStatus.WAITING_FOR_CHECK);
+                    }
+                    else
+                    {
+                        SetStatus(GuestStatus.WAITING_FOR_ORDER);
+                    }
+                }
+                break;
+            case GuestStatus.WAITING_FOR_CHECK:
+                if (previousStatus != GuestStatus.WAITING_FOR_CHECK)
+                {
+                    waitingForCheckTimeLeft = waitingForCheckTime;
+                }
+                if (waitingForCheckTimeLeft <= 0)
+                {
+                    SetStatus(GuestStatus.FINISHED);
+                }
+                break;
+            case GuestStatus.FINISHED:
+                // TODO: Add to score.
+                break;
+            default:
+                break;
         }
+        this.previousStatus = this.status;
     }
 
-    public void UpdateEatingTime(float dt)
+    private void StateLog(string message)
     {
-        eatingTimeLeft -= dt;
-        if (eatingTimeLeft <= 0f) {
-            SetStatus(GuestStatus.WAITING_FOR_CHECK);
-        }
+        Debug.Log("Guest " + this.GetInstanceID() + ": " + message);
     }
 
     private void Start()
@@ -83,5 +177,6 @@ public class Guest : MonoBehaviour
     public void SetStatus(GuestStatus status)
     {
         this.status = status;
+        this.Update();
     }
 }
