@@ -29,7 +29,6 @@ public class Guest : MonoBehaviour
         orderCanvas.UpdateOrder(activeOrder);
         if (received)
         {
-        
             CheckForSatisfied(activeOrder);
         }
         // Possibly animate eating...
@@ -38,14 +37,11 @@ public class Guest : MonoBehaviour
     void CheckForSatisfied(GuestOrder order)
     {
         bool orderDone = order.CheckDone();
-        if (status == GuestStatus.WAITING_FOR_ORDER && !orderDone) {
+        if (status == GuestStatus.WAITING_FOR_ORDER && orderDone) {
+            // Guest has all the flies they need and are ready to eat
             SetStatus(GuestStatus.EATING);
-            // do more stuff
         }
         else if (status == GuestStatus.EATING) {
-            if (orderDone) {
-                SetStatus(GuestStatus.WAITING_FOR_CHECK);
-            }
         } else if (status != GuestStatus.WAITING_FOR_ORDER) {
             SetStatus(GuestStatus.WAITING_FOR_ORDER);
         }
