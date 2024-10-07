@@ -941,9 +941,17 @@ PrefabInstance:
       propertyPath: activeOrder.flyAmount
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[1].fliesInDish
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[1].targetFly.color
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7721258775970399040, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_Name
-      value: GuestDad (2)
+      value: WantsBothFlies
       objectReference: {fileID: 0}
     - target: {fileID: 7876931652374534969, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1041,9 +1049,17 @@ PrefabInstance:
       propertyPath: activeOrder.flyAmount
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[0].targetFly.color
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7721258775970399040, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_Name
-      value: GuestDad (1)
+      value: WantsBlueFlies
       objectReference: {fileID: 0}
     - target: {fileID: 7876931652374534969, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1971,9 +1987,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1440430158}
     m_Modifications:
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 97345713410305341, guid: e3655c52099891e41821da6639e14206, type: 3}
+      propertyPath: activeOrder.dishes.Array.data[1].targetFly.color
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7721258775970399040, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_Name
-      value: GuestDad
+      value: WantsWhiteFlies
       objectReference: {fileID: 0}
     - target: {fileID: 7876931652374534969, guid: e3655c52099891e41821da6639e14206, type: 3}
       propertyPath: m_LocalPosition.x
