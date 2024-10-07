@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
                 if (underMouse != null) {
                     activePlacementWeb = underMouse;
                     pointMoveMode = underMouse.GetCloserEndpoint(worldPos.x, worldPos.y);
-                    audioSource.PlayOneShot(webPlaceSound);
+                    audioSource.PlayOneShot(webCutSound);
                 } else { // make new web
                     activePlacementWeb = GameObject.Instantiate<BounceWeb>(bounceWebPrefab);
                     spiderD.SetTargetPos(worldPos);
