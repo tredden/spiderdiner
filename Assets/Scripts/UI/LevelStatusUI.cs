@@ -44,6 +44,11 @@ public class LevelStatusUI : MonoBehaviour
         }
     }
 
+    public bool GetMetTarget()
+    {
+        return currentSatisfaction / maxSatisfaction >= satisfactionTargetFraction;
+    }
+
     public void SetMaxGuests(int value)
     {
         if (maxGuests != value) {

@@ -94,6 +94,8 @@ public class GuestManager : MonoBehaviour
 
     [SerializeField]
     LevelStatusUI levelStatusUI;
+    [SerializeField]
+    LevelCompleteWindow levelCompleteWindow;
 
     [SerializeField]
     float timePerGuest = 5f;
@@ -129,6 +131,9 @@ public class GuestManager : MonoBehaviour
 
     void UpdateLevelStatus()
     {
+        if (levelStatusUI == null) {
+            levelStatusUI = GameObject.FindAnyObjectByType<LevelStatusUI>();
+        }
         if (levelStatusUI != null) {
             levelStatusUI.SetMaxGuests(waitingGuests.Count + activeGuests.Count + fedGuests.Count + angeredGuests.Count);
             levelStatusUI.SetGuestsRemaining(waitingGuests.Count + activeGuests.Count);
@@ -240,5 +245,14 @@ public class GuestManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    void ShowDoneScreen()
+    {
+        UpdateLevelStatus();
+        if (levelCompleteWindow == null) {
+            levelCompleteWindow = GameObject.FindAnyObjectByType<LevelCompleteWindow>(FindObjectsInactive.Include);
+        }
+        levelCompleteWindow.Show(levelStatusUI.GetMetTarget());
     }
 }
