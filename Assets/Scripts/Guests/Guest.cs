@@ -25,6 +25,8 @@ public class Guest : MonoBehaviour
 
     [SerializeField]
     float waitingForOrderReduceSatisfactionTime = 8;
+    [SerializeField]
+    float waitingTimeAddedPerFly = 0.1f;
     float waitingForOrderReduceSatisfactionTimeLeft = 8;
 
     [SerializeField]
@@ -57,6 +59,12 @@ public class Guest : MonoBehaviour
     public bool ReceiveFly(Fly fly)
     {
         bool received = activeOrder.ReceiveFly(fly);
+        if (received) {
+            //waitingForOrderReduceSatisfactionTimeLeft += waitingTimeAddedPerFly;
+            //waitingForOrderReduceSatisfactionTimeLeft = Mathf.Min(waitingForOrderReduceSatisfactionTimeLeft, waitingForOrderReduceSatisfactionTime);
+            happy = true;
+            waitingForOrderReduceSatisfactionTimeLeft = waitingForOrderReduceSatisfactionTime;
+        }
         orderCanvas.UpdateOrder(activeOrder);
         MyUpdate();
         return received;
