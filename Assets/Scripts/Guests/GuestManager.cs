@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct GuestOrder
+public class GuestOrder
 {
 	public List<Dish> dishes;
     public List<Dish> eatenDishes;
     // If true, the guest will require dishes to be served in order.
     public bool multiCourse;
+    public int activeDishIndex = 0;
 
     public bool CheckDone() {
-        return dishes.Count == 0;
+        return activeDishIndex == dishes.Count;
     }
 
     public int fliesEaten {
@@ -28,14 +29,16 @@ public struct GuestOrder
 	}
 
     public bool ReceiveFly(Fly fly) {
-        for (int i = 0; i < dishes.Count; i++) {
-            if (multiCourse && i > 0) {
-                // Only the first dish can receive flies in multi-course mode
-                return false;
+        for (int i = activeDishIndex; i < dishes.Count; i++) {
+            if (multiCourse && i != activeDishIndex) {
+                // Only the active dish can receive flies in multi-course mode
+                break;
             }
-            if (dishes[i].ReceiveFly(fly) && dishes[i].CheckDone()) {
-                eatenDishes.Add(dishes[i]);
-                dishes.RemoveAt(i);
+            if (dishes[i].ReceiveFly(fly)) {
+				if (dishes[i].CheckDone()) {
+					eatenDishes.Add(dishes[i]);
+                    activeDishIndex++;
+                }
                 return true;
             }
         }
@@ -55,20 +58,20 @@ public struct GuestOrder
 }
 
 [System.Serializable]
-public struct Dish
+public class Dish
 {
     public int fliesInDish;
     [HideInInspector]
     public int fliesEaten;
-    public int spiceLevel;
-    public FlyColor color;
+    [SerializeField]
+    public Fly targetFly;
 
     public bool CheckDone() {
         return fliesEaten == fliesInDish;
     }
 
     public bool ReceiveFly(Fly fly) {
-        if (fly.color == color && fly.spiceLevel == spiceLevel) {
+        if (fly.color == targetFly.color && fly.spiceLevel == targetFly.spiceLevel) {
             fliesEaten++;
             return true;
         }

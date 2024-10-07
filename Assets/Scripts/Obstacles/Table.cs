@@ -24,6 +24,7 @@ public class Table : CircleInfluencer
     public void SetGuest(Guest activeGuest)
     {
         this.activeGuest = activeGuest;
+        activeGuest.UpdateText();
         activeGuest.transform.position = this.transform.position;
         activeGuest.transform.parent = this.transform;
     }
@@ -58,16 +59,13 @@ public class Table : CircleInfluencer
 
     public override void InfluenceFly(ref Fly fly, float dt)
     {
-        // TODO: needs to trigger an "on influence" function for the table so that guests can eat the flies
         if (fly.disable || activeGuest == null)
         {
             return;
         }
-        if (activeGuest.ReceiveFly(fly))
-        {
-            fly.disable = true;
-            particles.Emit(1);
-        }
+        activeGuest.ReceiveFly(fly);
+        fly.disable = true;
+        particles.Emit(1);
     }
 
     public void OnDrawGizmos()

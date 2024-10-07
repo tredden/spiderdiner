@@ -247,7 +247,7 @@ public class FlyManager : MonoBehaviour
         velVec.x = details.vx;
         velVec.y = details.vy;
         velVec.z = 0f;
-        flyRender.Emit(posVec, velVec, 1f, 10f, Color.white);
+        flyRender.Emit(posVec, velVec, 1f, 10f, details.getUnityColor());
         flyCount++;
         return true;
     }
@@ -277,7 +277,8 @@ public class FlyManager : MonoBehaviour
             velVec.z = 0;
             particles[i].position = posVec;
             particles[i].velocity = velVec;
-            particles[i].startColor = (Color.red * (float)fly.spiceLevel + Color.white * (maxSpiceLevel - (float)fly.spiceLevel)) / maxSpiceLevel;
+            //particles[i].startColor = (Color.red * (float)fly.spiceLevel + Color.white * (maxSpiceLevel - (float)fly.spiceLevel)) / maxSpiceLevel;
+            particles[i].startColor = fly.getUnityColor();
         }
 
         for (int i = flyCount; i < particleCount; i++) {

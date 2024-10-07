@@ -18,4 +18,17 @@ public struct Fly {
     public int spiceLevel;// = 0;
     public bool enabled;// = false;
     public bool disable;// = false;
+
+    public Color getUnityColor() {
+		switch (color) {
+            case FlyColor.WHITE:
+                return Color.white;
+            case FlyColor.BLUE:
+                return Color.blue;
+            case FlyColor.RED:
+                return Color.red;
+            default:
+                return Color.white;
+        }
+    }
 }    
