@@ -1039,7 +1039,7 @@ Transform:
   - {fileID: 1548160744}
   m_Father: {fileID: 1582609520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1244371973
+--- !u!1001 &1381910038
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1047,25 +1047,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1336857583395518173, guid: 6403ef253f58937479349672820f029f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336857583395518173, guid: 6403ef253f58937479349672820f029f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336857583395518173, guid: 6403ef253f58937479349672820f029f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4041774733921082589, guid: 6403ef253f58937479349672820f029f, type: 3}
       propertyPath: m_Name
-      value: SpiceCloud
-      objectReference: {fileID: 0}
-    - target: {fileID: 4200322447108267426, guid: 6403ef253f58937479349672820f029f, type: 3}
-      propertyPath: rawInfluenceRadius
-      value: 4
+      value: SpiceCloud (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5334151771134253661, guid: 6403ef253f58937479349672820f029f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2524,4 +2508,4 @@ SceneRoots:
   - {fileID: 1805729617}
   - {fileID: 972587285}
   - {fileID: 1597120556}
-  - {fileID: 1244371973}
+  - {fileID: 1381910038}
