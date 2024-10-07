@@ -44,6 +44,13 @@ public class Guest : MonoBehaviour
     float maxSatisfaction = 100;
     float currentSatisfaction = 100;
 
+    [SerializeField]
+    float eatingBounceHeight = .2f;
+    [SerializeField]
+    float eatingBouncePeriod = .2f;
+    [SerializeField]
+    float eatingBounceSpike = 3f;
+
     public void UpdateText() {
         orderCanvas.UpdateOrder(activeOrder);
     }
@@ -112,9 +119,9 @@ public class Guest : MonoBehaviour
                 }
 
                 // Bounce up and down while eating
-                Vector3 pos = this.transform.position;
-                pos.y = Mathf.Sin(eatingTimeLeft) * 10f;
-                this.transform.position = pos;
+                Vector3 pos = transform.localPosition;
+                pos.y = Mathf.Pow(Mathf.Sin((eatingTimeLeft / eatingBouncePeriod) * Mathf.PI * 2f), eatingBounceSpike) * eatingBounceHeight;
+                this.transform.localPosition = pos;
 
                 if (eatingTimeLeft <= 0)
                 {
@@ -150,7 +157,7 @@ public class Guest : MonoBehaviour
 
     private void StateLog(string message)
     {
-        Debug.Log("Guest " + this.GetInstanceID() + ": " + message);
+        Debug.Log("Guest \"" + this.name + "\": " + message);
     }
 
     private void Start()

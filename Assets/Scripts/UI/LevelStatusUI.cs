@@ -77,9 +77,8 @@ public class LevelStatusUI : MonoBehaviour
 
         float filledFraction = currentSatisfaction / maxSatisfaction;
         Vector2 size = barFill.rectTransform.sizeDelta;
-        size.x = pos.x;
+        size.x = filledFraction * barWidth;
         barFill.rectTransform.sizeDelta = size;
-        Color.Lerp(Color.red, Color.green, filledFraction);
-        barFill.color = Color.Lerp(Color.red, Color.green, filledFraction); ;
+        barFill.color = filledFraction < 0.5 ? Color.Lerp(Color.red, Color.yellow, filledFraction * 2f) : Color.Lerp(Color.yellow, Color.green, filledFraction * 2f - 1f);
     }
 }
