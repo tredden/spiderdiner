@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spiderD: {fileID: 0}
   bounceWebPrefab: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
-  addedCursorWidth: 4
+  addedCursorWidth: 2
   distTreshold: 1.5
   webPlaceSound: {fileID: 8300000, guid: 40f8ec079b9464027a09c29f0a4b84f0, type: 3}
   webCutSound: {fileID: 8300000, guid: b597c946a884049b3934b8ccf568ee68, type: 3}

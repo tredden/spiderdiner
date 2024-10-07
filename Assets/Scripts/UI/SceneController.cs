@@ -29,6 +29,8 @@ public class SceneController : MonoBehaviour
     AudioClip levelMusic;
     [SerializeField]
     AudioClip bossMusic;
+    [SerializeField]
+    AudioClip levelStartSound;
 
     public static SceneController GetInstance()
     {
@@ -72,6 +74,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        PlayMenuMusic();
         SceneManager.LoadScene(mainMenuScene, LoadSceneMode.Single);
     }
 
@@ -87,7 +90,14 @@ public class SceneController : MonoBehaviour
         string nextLevel = levelScenes[level];
         currentLevel = level;
 
+        bool isBoss = bossLevels.Contains(levelScenes[level]);
+        if (isBoss) {
+            PlayBossMusic();
+        } else {
+            PlayLevelMusic();
+        }
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Single);
+        audioSource.PlayOneShot(levelStartSound);
     }
 
     public void LoadNextLevel()
