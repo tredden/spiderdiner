@@ -179,6 +179,9 @@ public class FlyManager : MonoBehaviour
             Fly f = flies[i];
             if (f.enabled) {
                 foreach (ObstacleBase obstacle in obstacles) {
+                    if (!obstacle.isActiveAndEnabled) {
+                        continue;
+                    }
                     if (obstacle.GetDoesInteract(ref f, dt)) {
                         obstacle.InfluenceFly(ref f, dt);
                     }
