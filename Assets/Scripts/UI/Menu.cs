@@ -30,7 +30,6 @@ public class Menu : MonoBehaviour
 
     public void PageLeft()
     {
-        Debug.Log("left");
         if(page>0)
             page-=1;
         UpdatePage();
