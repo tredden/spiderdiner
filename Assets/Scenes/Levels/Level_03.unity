@@ -825,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 878433402888278330, guid: 821fdba43635b10489fd3987ce647b70, type: 3}
       propertyPath: bounds.height
-      value: 17
+      value: 21.9
       objectReference: {fileID: 0}
     - target: {fileID: 4638325831360635268, guid: 821fdba43635b10489fd3987ce647b70, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1927,6 +1927,10 @@ PrefabInstance:
     - target: {fileID: 2018343706127991863, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_Name
       value: Emitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2018343706127991863, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3408467649512878360, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_LocalPosition.x

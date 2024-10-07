@@ -20,9 +20,7 @@ public class BoxInfluencer : ObstacleBase
 
     public override bool GetDoesInteract(ref Fly fly, float dt)
     {
-        checkPoint.x = fly.x;
-        checkPoint.y = fly.y;
-        return bounds.Contains(checkPoint);
+        return fly.x <= bounds.xMax && fly.x >= bounds.xMin && fly.y <= bounds.yMax && fly.y >= bounds.yMin;
     }
 
     protected override NavMeshObstacle GetNavObstacle()

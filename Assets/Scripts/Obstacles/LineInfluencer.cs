@@ -20,6 +20,13 @@ public class LineInfluencer : ObstacleBase
     bool tryPreserveOrientation = false;
 
     [SerializeField]
+    SpriteRenderer pointACapRender;
+    [SerializeField]
+    SpriteRenderer pointBCapRender;
+    [SerializeField]
+    bool rotateCaps = false;
+
+    [SerializeField]
     NavMeshObstacle navPrefab;
     [SerializeField]
     protected bool carvesNavigation = false;
@@ -215,7 +222,7 @@ public class LineInfluencer : ObstacleBase
     {
         pos.x = (pointA.x + pointB.x) / 2f;
         pos.y = (pointA.y + pointB.y) / 2f;
-        pos.z = -pos.y;
+        pos.z = lineRender.transform.position.z;
         float dx = pointB.x - pointA.x;
         float dy = pointB.y - pointA.y;
         lineRender.transform.position = pos;
@@ -242,6 +249,24 @@ public class LineInfluencer : ObstacleBase
         }
         lineRender.transform.rotation = Quaternion.Euler(0f, 0f, ez);
         lineRender.size = size;
+        if (pointACapRender != null) {
+            pos.x = pointA.x;
+            pos.y = pointA.y;
+            pos.z = pointACapRender.transform.position.z;
+            pointACapRender.transform.position = pos;
+            if (rotateCaps) {
+                pointACapRender.transform.rotation = Quaternion.Euler(0f, 0f, ez);
+            }
+        }
+        if (pointBCapRender != null) {
+            pos.x = pointB.x;
+            pos.y = pointB.y;
+            pos.z = pointBCapRender.transform.position.z;
+            pointBCapRender.transform.position = pos;
+            if (rotateCaps) {
+                pointBCapRender.transform.rotation = Quaternion.Euler(0f, 0f, ez);
+            }
+        }
     }
 
     private void Update()
