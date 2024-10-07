@@ -2172,14 +2172,34 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 4233190407164923438, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5555970950900461010, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
       propertyPath: m_Name
       value: NavUniverse
       objectReference: {fileID: 0}
     - target: {fileID: 5882937390221805831, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.8333333
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882937390221805831, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 8087aa67eef151646a9c013bbe5a3e38, type: 2}
+    - target: {fileID: 5882937390221805831, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
+      propertyPath: m_OverrideTileSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882937390221805831, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634724249889857759, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6977770011826479885, guid: dd2196b126a83e340874d609d165d5fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
