@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spiderD: {fileID: 0}
   bounceWebPrefab: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
-  addedCursorWidth: 1
+  addedCursorWidth: 4
   distTreshold: 1.5
