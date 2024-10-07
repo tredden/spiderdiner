@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c4d9595a1d8654c96e36db25b772e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputMode: 2
+  spiderD: {fileID: 0}
   bounceWebPrefab: {fileID: 6890288778264356162, guid: 9153e10c054212b4083dc5602ab00336, type: 3}
+  addedCursorWidth: 1
+  distTreshold: 1.5

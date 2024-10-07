@@ -89,6 +89,11 @@ public class GuestManager : MonoBehaviour
     List<Guest> activeGuests = new List<Guest>();
     [SerializeField]
     List<Guest> fedGuests = new List<Guest>();
+    [SerializeField]
+    List<Guest> angeredGuests = new List<Guest>();
+
+    [SerializeField]
+    LevelStatusUI levelStatusUI;
 
     [SerializeField]
     float timePerGuest = 5f;
@@ -122,11 +127,37 @@ public class GuestManager : MonoBehaviour
         }
     }
 
+    void UpdateLevelStatus()
+    {
+        if (levelStatusUI != null) {
+            levelStatusUI.SetMaxGuests(waitingGuests.Count + activeGuests.Count + fedGuests.Count + angeredGuests.Count);
+            levelStatusUI.SetGuestsRemaining(waitingGuests.Count + activeGuests.Count);
+            float maxSatisfaction = 0f;
+            float currentSatisfaction = 0f;
+            foreach (Guest g in waitingGuests) {
+                maxSatisfaction += g.GetMaxSatisfaction();
+            }
+            foreach (Guest g in activeGuests) {
+                maxSatisfaction += g.GetMaxSatisfaction();
+            }
+            foreach (Guest g in angeredGuests) {
+                maxSatisfaction += g.GetMaxSatisfaction();
+            }
+            foreach (Guest g in fedGuests) {
+                maxSatisfaction += g.GetMaxSatisfaction();
+                currentSatisfaction += g.GetCurrentSatisfaction();
+            }
+            levelStatusUI.SetMaxSatisfaction(maxSatisfaction);
+            levelStatusUI.SetCurrentSatisfaction(currentSatisfaction);
+        }
+    }
+
     public void RegisterGuest(Guest g)
     {
         waitingGuests.Add(g);
         g.SetStatus(GuestStatus.WAITING_FOR_TABLE);
         g.gameObject.SetActive(false);
+        UpdateLevelStatus();
     }
 
     public Table FindOpenTable()
@@ -170,6 +201,8 @@ public class GuestManager : MonoBehaviour
 
         UpdateHostStand(dt);
         UpdateActiveTables(dt);
+
+        UpdateLevelStatus();
     }
 
     void UpdateHostStand(float dt)
@@ -201,6 +234,7 @@ public class GuestManager : MonoBehaviour
                     t.RemoveGuest();
                     fedGuests.Add(g);
                     g.gameObject.SetActive(false);
+                    UpdateLevelStatus();
                 } else if (g.GetStatus() == GuestStatus.EATING) {
                     g.UpdateEatingTime(dt);
                 }

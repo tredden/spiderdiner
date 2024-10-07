@@ -20,6 +20,10 @@ public class Guest : MonoBehaviour
     [SerializeField]
     float eatingTimeLeft = 15;
 
+    [SerializeField]
+    float maxSatisfaction;
+    float currentSatisfaction;
+
     public void UpdateText() {
         orderCanvas.UpdateOrder(activeOrder);
     }
@@ -57,12 +61,23 @@ public class Guest : MonoBehaviour
 
     private void Start()
     {
+        currentSatisfaction = maxSatisfaction;
         GuestManager.GetInstance().RegisterGuest(this);
     }
 
     public GuestStatus GetStatus()
     {
         return status;
+    }
+
+    public float GetMaxSatisfaction()
+    {
+        return maxSatisfaction;
+    }
+
+    public float GetCurrentSatisfaction()
+    {
+        return currentSatisfaction;
     }
 
     public void SetStatus(GuestStatus status)
