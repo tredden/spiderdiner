@@ -61,7 +61,7 @@ public class Attractor : CircleInfluencer
         }
     }
 
-    public virtual void OnDrawGizmos()
+    public override void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, attractionRadius);

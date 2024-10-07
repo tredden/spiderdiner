@@ -7,7 +7,6 @@ public class SpiderD : MonoBehaviour
 {
     public Vector3 targetPos;
     public Vector3 currentPos;
-    public Vector3 moveVec;
 
     [SerializeField]
     NavMeshAgent agent;
@@ -15,12 +14,7 @@ public class SpiderD : MonoBehaviour
     [SerializeField]
     Animator animator;
     [SerializeField]
-    SpriteRenderer renderer;
-
-    [SerializeField]
-    float moveSpeed = 5f;
-    [SerializeField]
-    float stopThreshold = .1f;
+    SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -61,10 +55,10 @@ public class SpiderD : MonoBehaviour
             bool isRunning = agent.desiredVelocity.magnitude > 0.1f;
             bool faceLeft = agent.desiredVelocity.x < -.1f;
             bool faceRight = agent.desiredVelocity.x > .1f;
-            if (faceLeft && !renderer.flipX) {
-                renderer.flipX = true;
-            } else if (faceRight && renderer.flipX) {
-                renderer.flipX = false;
+            if (faceLeft && !spriteRenderer.flipX) {
+                spriteRenderer.flipX = true;
+            } else if (faceRight && spriteRenderer.flipX) {
+                spriteRenderer.flipX = false;
             }
             // bool isRunning = moveVec.magnitude > stopThreshold;
 

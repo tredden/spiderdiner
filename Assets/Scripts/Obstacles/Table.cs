@@ -10,14 +10,15 @@ public class Table : CircleInfluencer
     [SerializeField]
     Guest activeGuest;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         GuestManager.GetInstance().RegisterTable(this);
     }
 
-    protected virtual void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         GuestManager.GetInstance().DeregisterTable(this);
     }
 
@@ -68,7 +69,7 @@ public class Table : CircleInfluencer
         particles.Emit(1);
     }
 
-    public void OnDrawGizmos()
+    public override void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, rawInfluenceRadius);

@@ -1401,12 +1401,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPos: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
-  moveVec: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
   animator: {fileID: 1805729620}
-  renderer: {fileID: 1805729621}
-  moveSpeed: 30
-  stopThreshold: 0.1
+  spriteRenderer: {fileID: 1805729621}
 --- !u!95 &1805729620 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5877902044173530548, guid: 246bbe7db94bfde46ae9abb5434dde42, type: 3}
