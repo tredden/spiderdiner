@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[ExecuteInEditMode]
 public class BoxInfluencer : ObstacleBase
 {
     [SerializeField]
@@ -38,7 +39,6 @@ public class BoxInfluencer : ObstacleBase
         return null;
     }
 
-    [ExecuteInEditMode]
     protected virtual void UpdateNavObstacle()
     {
         if (navObstacle != null) {
@@ -54,7 +54,6 @@ public class BoxInfluencer : ObstacleBase
         }
     }
 
-    [ExecuteInEditMode]
     protected virtual void UpdateVisual()
     {
         Vector3 pos = boxRender.transform.position;
@@ -64,7 +63,6 @@ public class BoxInfluencer : ObstacleBase
         boxRender.size = bounds.size;
     }
 
-    [ExecuteInEditMode]
     private void Update()
     {
         UpdateVisual();
