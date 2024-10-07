@@ -58,13 +58,27 @@ public class Table : CircleInfluencer
         }
     }
 
+    Vector3 flyPos = Vector3.zero;
+    Vector3 flyVel = Vector3.zero;
+    ParticleSystem.EmitParams emitParams;
+    void RenderCapturedFly(ref Fly fly)
+    {
+        flyPos = (Random.insideUnitSphere * particles.shape.radius);
+        flyPos.z = 0;
+        flyPos += particles.shape.position;
+        emitParams.position = flyPos;
+        emitParams.velocity = flyVel;
+        emitParams.startColor = fly.getUnityColor();
+        particles.Emit(emitParams, 1);
+    }
+
     public override void InfluenceFly(ref Fly fly, float dt)
     {
         if (fly.disable) {
             return;
         }
         fly.disable = true;
-        particles.Emit(1);
+        RenderCapturedFly(ref fly);
         if (activeGuest == null)
         {
             return;
