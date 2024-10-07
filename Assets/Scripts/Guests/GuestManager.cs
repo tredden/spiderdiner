@@ -251,7 +251,11 @@ public class GuestManager : MonoBehaviour
                 if (g.GetStatus() == GuestStatus.FINISHED) {
                     activeGuests.Remove(g);
                     t.RemoveGuest();
-                    fedGuests.Add(g);
+                    if (g.GetCurrentSatisfaction() <= 0) {
+                        angeredGuests.Add(g);
+                    } else {
+						fedGuests.Add(g);
+                    }
                     g.gameObject.SetActive(false);
                     UpdateLevelStatus();
                 } else if (g.GetStatus() == GuestStatus.EATING) {

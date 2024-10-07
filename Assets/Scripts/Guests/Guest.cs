@@ -82,6 +82,11 @@ public class Guest : MonoBehaviour
 			StateLog(previousStatus + " -> " + status);
 		}
 
+        if (currentSatisfaction <= 0)
+        {
+            SetStatus(GuestStatus.FINISHED);
+        }
+
         switch (status)
         {
             case GuestStatus.WAITING_FOR_TABLE:
