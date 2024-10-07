@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "spiderdiner.sln"
+    "dotnet.defaultSolution": "Spider Diner.sln"
 }
