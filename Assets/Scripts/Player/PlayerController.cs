@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
     Camera viewCamera;
+    AudioSource audioSource;
 
     [SerializeField]
     SpiderD spiderD;
@@ -23,10 +25,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float distTreshold = 0.5f;
 
+    [SerializeField]
+    AudioClip webPlaceSound;
+
+    [SerializeField]
+    AudioClip webCutSound;
+
     // Start is called before the first frame update
     void Start()
     {
         viewCamera = GameObject.FindAnyObjectByType<Camera>();
+        audioSource = this.GetComponent<AudioSource>();
         if (spiderD == null) {
             spiderD = FindObjectOfType<SpiderD>();
         }
@@ -59,11 +68,13 @@ public class PlayerController : MonoBehaviour
                 if (underMouse != null) {
                     activePlacementWeb = underMouse;
                     pointMoveMode = underMouse.GetCloserEndpoint(worldPos.x, worldPos.y);
+                    audioSource.PlayOneShot(webPlaceSound);
                 } else { // make new web
                     activePlacementWeb = GameObject.Instantiate<BounceWeb>(bounceWebPrefab);
                     spiderD.SetTargetPos(worldPos);
                     activePlacementWeb.SetPointA(worldPos.x, worldPos.y);
                     activePlacementWeb.SetPointB(worldPos.x, worldPos.y);
+                    audioSource.PlayOneShot(webPlaceSound);
                     pointMoveMode = 1; // move pointB
                 }
             }
@@ -74,6 +85,7 @@ public class PlayerController : MonoBehaviour
                 if (underMouse != null) {
                     GameObject.Destroy(underMouse.gameObject);
                     placedWebs.Remove(underMouse);
+                    audioSource.PlayOneShot(webCutSound);
                 }
             }
         } else { // has active point
@@ -87,11 +99,13 @@ public class PlayerController : MonoBehaviour
             if (activePlacementWeb.GetDist() >= distTreshold && Input.GetMouseButtonUp(0) || Input.GetMouseButtonDown(0)) {
                 pointMoveMode = -1;
                 placedWebs.Add(activePlacementWeb);
+                audioSource.PlayOneShot(webPlaceSound);
                 activePlacementWeb = null;
             } else if (Input.GetMouseButtonDown(1)) {
                 pointMoveMode = -1;
                 activePlacementWeb.gameObject.SetActive(false);
                 GameObject.Destroy(activePlacementWeb.gameObject);
+                audioSource.PlayOneShot(webCutSound);
                 activePlacementWeb = null;
             }
         }

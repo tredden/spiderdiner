@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4426258453536790330, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: initialState.color
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4869255133191642193, guid: 4394eac11f68988408c4de4749fb3529, type: 3}
       propertyPath: m_SortingOrder
